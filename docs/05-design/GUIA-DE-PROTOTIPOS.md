@@ -270,7 +270,7 @@ Funciona como a trilha A. O repositório tem um [`GEMINI.md`](../../GEMINI.md) q
    ```
 4. Cole o **prompt mestre** preenchido. Para garantir que ele leia as referências, comece a mensagem com:
    ```text
-   @ferramentas/prototipos/gerar_telas.py @docs/05-design/README.md @docs/05-design/prototipos/html/004-criar-anuncio-etapa-2-detalhes.html @docs/05-design/prototipos/html/001-home-feed.html
+   @AGENTS.md @ferramentas/prototipos/gerar_telas.py @docs/05-design/README.md @docs/05-design/prototipos/html/002-central-de-notificacoes.html @docs/05-design/prototipos/html/004-criar-anuncio-etapa-2-detalhes.html
    ```
 5. Aprove quando ele pedir para escrever o arquivo e rodar os comandos `python3`.
 6. Se ele disser que terminou sem rodar os verificadores, peça: `rode os dois verificadores e corrija até ficar tudo ✅`.
@@ -343,7 +343,7 @@ No Windows (PowerShell): `py ferramentas\prototipos\conferir_telas.py 007`. No M
 
 | Verificador | O que olha | Precisa de |
 |---|---|---|
-| `verificar_telas.py` | O **código**: nome do arquivo, `<title>`, estrutura, cores, fontes, tamanhos, recursos externos | Só Python |
+| `verificar_telas.py` | O **código**: nome do arquivo, `<title>`, cabeçalho e CSS idênticos ao oficial, cores, fontes, tamanhos e pesos, ícones do dicionário, emoji, recursos externos e se o PNG existe | Só Python |
 | `conferir_telas.py` | O que **aparece no navegador**: cor e fonte de cada elemento, fontes carregadas, nada atrás do rodapé, nada vazando; e salva o **PNG** | Python, Chrome, internet |
 
 ### Como ler o resultado
@@ -355,13 +355,16 @@ No Windows (PowerShell): `py ferramentas\prototipos\conferir_telas.py 007`. No M
    - "Ver detalhes" fica atrás do rodapé (941 > 916)  → falta espaço; reduza gaps ou textos
    - Caixa .card fica atrás do rodapé                → idem
    - Fonte "Inter" em .body                          → a IA trocou a fonte
+   - Cabeçalho ou CSS diferente do oficial           → a IA reescreveu o CSS; peça para copiar o de 002 literalmente
+   - Ícone fora do dicionário I                      → a IA desenhou um ícone; peça o SVG do lucide.dev e me mande
 ```
 
 ### O que os verificadores NÃO pegam (confira no olho)
 
-- Peso de fonte errado (título em 600 em vez de Bold) ou Space Grotesk em texto comum
-- Cantos, margens e espaçamentos diferentes das telas vizinhas
-- Ícone inventado ou desenhado errado, emoji no lugar de ícone
+- Space Grotesk em texto comum, ou peso trocado dentro do permitido (título em 600 em vez de Bold)
+- Cantos, margens e espaçamentos mudados por `style="…"` direto no elemento
+- Ícone certo no lugar errado (ex.: lixeira no botão de salvar)
+- PNG antigo: depois de mudar o HTML, rode o `conferir_telas.py` de novo para atualizar o PNG
 - Elementos sobrepostos ou textos que não fazem sentido para a tarefa
 
 Quando os verificadores mostrarem ✅, **abra o PNG** (`docs/05-design/prototipos/png/007-….png`) e compare lado a lado com 001–006. Os verificadores garantem as regras; o seu olho garante que ficou bonito (alinhamentos, hierarquia, textos que fazem sentido).

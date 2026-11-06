@@ -1,0 +1,16 @@
+# Fim de linha uniforme nas telas, scripts e configurações
+# (evita diferenças quando alguém edita no Windows)
+*.html text eol=lf
+*.py   text eol=lf
+*.yml  text eol=lf
+*.svg  text eol=lf
+*.css  text eol=lf
+*.js   text eol=lf
+
+# Arquivos binários: nunca converter
+*.png  binary
+*.jpg  binary
+*.pdf  binary
+*.xlsx binary
+*.docx binary
+*.pptx binary

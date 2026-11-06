@@ -3,6 +3,10 @@
 
 Confere o código-fonte de cada tela:
   - nome do arquivo no formato NNN-nome-da-tela.html e <title> começando com o mesmo NNN;
+  - cabeçalho e CSS copiados LITERALMENTE de gerar_telas.py (a fonte única do padrão);
+    classes novas só no fim do <style>, sem redefinir as que já existem;
+  - ícones só do dicionário I de gerar_telas.py, sem emoji; pesos de fonte 400/500/600/700;
+  - cada HTML tem o PNG correspondente em png/ (gerado pelo conferir_telas.py);
   - estrutura padrão: página 1920x1200, .phone de 375x812 em 773,194, .notch;
   - Google Fonts com Space Grotesk e DM Sans; nenhuma outra fonte;
   - cores (hex e rgb/rgba) só da paleta da marca;
@@ -14,12 +18,34 @@ Para o layout de verdade (nada atrás do rodapé) e as capturas PNG, rode depois
 Uso:  python3 ferramentas/prototipos/verificar_telas.py [arquivos...]
 Sai com código 1 se alguma tela reprovar.
 """
+import ast
 import pathlib
 import re
 import sys
 
 RAIZ = pathlib.Path(__file__).resolve().parents[2]
 TELAS = RAIZ / 'docs/05-design/prototipos/html'
+PNGS = RAIZ / 'docs/05-design/prototipos/png'
+GERADOR = pathlib.Path(__file__).resolve().parent / 'gerar_telas.py'
+
+
+def _padrao():
+    """Lê HEAD, CSS e o dicionário I de gerar_telas.py sem executar o gerador."""
+    valores = {}
+    for no in ast.parse(GERADOR.read_text(encoding='utf-8')).body:
+        if isinstance(no, ast.Assign) and len(no.targets) == 1 and getattr(no.targets[0], 'id', '') in {'HEAD', 'CSS', 'I'}:
+            valores[no.targets[0].id] = ast.literal_eval(no.value)
+    return valores['HEAD'], valores['CSS'], valores['I']
+
+
+HEAD, CSS, ICONES = _padrao()
+_pre, _resto = HEAD.split('{title}')
+_meio, _pos = _resto.split('{css}')
+CABECALHO = re.compile(re.escape(_pre) + r'(.*?)' + re.escape(_meio) + re.escape(CSS) + r'(.*?)' + re.escape(_pos), re.S)
+SELETORES_BASE = {s.strip() for s in re.findall(r'([^{}]+)\{', CSS)}
+ICONES_OK = {re.sub(r'\s+', ' ', v).strip() for v in ICONES.values()}
+EMOJI = re.compile('[\U0001F300-\U0001FAFF\u2600-\u27BF\U0001F000-\U0001F2FF\uFE0F]')
+PESOS = {400, 500, 600, 700}
 
 PALETA = {
     '0d1b2a': 'Charcoal', '070f18': 'Fundo', '11233a': 'Superfície', '1a3250': 'Borda',
@@ -32,7 +58,20 @@ TAMANHOS = {11, 13, 14, 15, 16, 18, 20, 24}
 NOME = re.compile(r'^(\d{3})-[a-z0-9]+(?:-[a-z0-9]+)*\.html$')
 
 
-CORES_COM_NOME = r'\b(?:white|black|red|green|blue|gray|grey|silver|lime|teal|navy|orange|yellow|purple)\b'
+CORES_COM_NOME = r'\b(?:' + '|'.join('''aliceblue antiquewhite aqua aquamarine azure beige bisque black blanchedalmond blue
+blueviolet brown burlywood cadetblue chartreuse chocolate coral cornflowerblue cornsilk crimson cyan darkblue
+darkcyan darkgoldenrod darkgray darkgreen darkgrey darkkhaki darkmagenta darkolivegreen darkorange darkorchid
+darkred darksalmon darkseagreen darkslateblue darkslategray darkslategrey darkturquoise darkviolet deeppink
+deepskyblue dimgray dimgrey dodgerblue firebrick floralwhite forestgreen fuchsia gainsboro ghostwhite gold
+goldenrod gray green greenyellow grey honeydew hotpink indianred indigo ivory khaki lavender lavenderblush
+lawngreen lemonchiffon lightblue lightcoral lightcyan lightgoldenrodyellow lightgray lightgreen lightgrey
+lightpink lightsalmon lightseagreen lightskyblue lightslategray lightslategrey lightsteelblue lightyellow lime
+limegreen linen magenta maroon mediumaquamarine mediumblue mediumorchid mediumpurple mediumseagreen
+mediumslateblue mediumspringgreen mediumturquoise mediumvioletred midnightblue mintcream mistyrose moccasin
+navajowhite navy oldlace olive olivedrab orange orangered orchid palegoldenrod palegreen paleturquoise
+palevioletred papayawhip peachpuff peru pink plum powderblue purple rebeccapurple red rosybrown royalblue
+saddlebrown salmon sandybrown seagreen seashell sienna silver skyblue slateblue slategray slategrey snow
+springgreen steelblue tan teal thistle tomato turquoise violet wheat white whitesmoke yellow yellowgreen'''.split()) + r')\b'
 
 
 def expandir(h):
@@ -53,7 +92,7 @@ def verificar(arq: pathlib.Path):
         erros.append(f'<title> deve começar com {m.group(1)} (está "{t.group(1).strip()}")')
 
     sem_dados = re.sub(r'data:[^"\')\s]+', 'data:', txt)  # ignora imagens embutidas
-    estilo = ' '.join(re.findall(r'<style>(.*?)</style>', txt, re.S)) + ' ' + ' '.join(re.findall(r'style="([^"]*)"', txt))
+    estilo = ' '.join(re.findall(r'<style[^>]*>(.*?)</style>', txt, re.S | re.I)) + ' ' + ' '.join(re.findall(r'style="([^"]*)"', txt))
 
     for trecho, desc in [(r'width:\s*1920px', 'body com 1920px de largura'),
                          (r'height:\s*1200px', 'body com 1200px de altura'),
@@ -69,7 +108,7 @@ def verificar(arq: pathlib.Path):
         if expandir(h) not in PALETA:
             erros.append(f'Cor fora da paleta: #{h}')
     for rgb in sorted(set(re.findall(r'rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)', estilo))):
-        if ','.join(rgb) not in PALETA_RGB and ','.join(rgb) != '0,0,0':
+        if ','.join(rgb) not in PALETA_RGB:
             erros.append(f'Cor fora da paleta: rgb({",".join(rgb)})')
 
     if re.search(r'\bhsla?\(', estilo):
@@ -86,6 +125,25 @@ def verificar(arq: pathlib.Path):
     for tam in sorted(set(float(x) for x in re.findall(r'font-size\s*:\s*([\d.]+)px', estilo))):
         if tam not in TAMANHOS:
             erros.append(f'Tamanho de fonte fora da escala: {tam:g}px')
+
+    cab = CABECALHO.match(txt)
+    if not cab:
+        erros.append('Cabeçalho ou CSS diferente do oficial: copie literalmente o início de 002 (ou o HEAD/CSS de '
+                     'gerar_telas.py) até <div class="notch"></div>, trocando só o <title>; classes novas só no fim do <style>')
+    else:
+        for sel in re.findall(r'([^{}]+)\{', cab.group(2)):
+            if sel.strip() in SELETORES_BASE:
+                erros.append(f'Não redefina a classe oficial "{sel.strip()}" no fim do <style>: use a que já existe')
+    for svg in re.findall(r'<svg[^>]*>(.*?)</svg>', txt, re.S | re.I):
+        if re.sub(r'\s+', ' ', svg).strip() not in ICONES_OK:
+            erros.append(f'Ícone fora do dicionário I de gerar_telas.py: {svg.strip()[:50]}…')
+    if EMOJI.search(re.sub(r'<style.*?</style>', '', sem_dados, flags=re.S)):
+        erros.append(f'Emoji não permitido (use ícone do dicionário I): {EMOJI.search(sem_dados).group()}')
+    for peso in sorted(set(re.findall(r'font-weight\s*:\s*(\w+)', estilo))):
+        if not peso.isdigit() or int(peso) not in PESOS:
+            erros.append(f'Peso de fonte não permitido: {peso} (use 400, 500, 600 ou 700)')
+    if m and not (PNGS / arq.with_suffix('.png').name).exists():
+        erros.append(f'Falta o PNG: rode python3 ferramentas/prototipos/conferir_telas.py {m.group(1)}')
 
     for url in re.findall(r'(?:src|href)="(https?://[^"]+)"', txt):
         if not re.match(r'https://fonts\.(googleapis|gstatic)\.com', url):
