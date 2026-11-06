@@ -31,4 +31,16 @@ Geradas em HTML por [`ferramentas/prototipos/gerar_telas.py`](../../../ferrament
 | 005 | [Criar Anúncio — Preço e entrega](html/005-criar-anuncio-etapa-3-preco-e-entrega.html) | EDTS-256 | STY016 | <img src="png/005-criar-anuncio-etapa-3-preco-e-entrega.png" width="180"> |
 | 006 | [Criar Anúncio — Revisão](html/006-criar-anuncio-etapa-4-revisao.html) | EDTS-257 | STY016 | <img src="png/006-criar-anuncio-etapa-4-revisao.png" width="180"> |
 
+## Histórico — versões anteriores
+
+Primeiras versões das telas de autenticação, anexadas nas tarefas de prototipagem do Jira. Ficam aqui para mostrar a evolução do design; a versão atual é a da seção [Autenticação](#autenticação-versão-de-13092026).
+
+| Sprint | Tela | Jira | |
+|---|---|---|---|
+| 8 (30/08/2026) | Login — primeira versão | EDTS-103 | <img src="historico/sprint08-login-v1.png" width="180"> |
+| 9 (06/09/2026) | Login — segunda versão | EDTS-124 | <img src="historico/sprint09-login-v2.png" width="180"> |
+| 9 (06/09/2026) | Criar conta — primeira versão | EDTS-124 | <img src="historico/sprint09-criar-conta-v1.png" width="180"> |
+
+As telas de autenticação da Sprint 10 (EDTS-173) são as da seção Autenticação acima. As tarefas EDTS-191 (Sprint 11) e EDTS-203 (Sprint 12) não têm imagens anexadas no Jira.
+
 As demais telas (chat, propostas, agendamento, garantia e disputas — tarefas `PROTOTIPAGEM` no Jira) seguem o mesmo processo: veja o [Guia de protótipos](../GUIA-DE-PROTOTIPOS.md).
