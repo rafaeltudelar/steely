@@ -1,8 +1,18 @@
+<a href="https://rafaeltudelar.github.io/steely/"><img src=".github/assets/banner.svg" alt="Steely — hardware usado, com laudo de IA" width="100%"></a>
+
+<p align="center">
+  <a href=".github/workflows/verificacoes.yml"><img alt="Verificações" src="https://github.com/rafaeltudelar/steely/actions/workflows/verificacoes.yml/badge.svg"></a>
+  <img alt="Status: em desenvolvimento" src="https://img.shields.io/badge/status-em%20desenvolvimento-1DDB6A?labelColor=0D1B2A">
+  <img alt="Sprints 7 a 16" src="https://img.shields.io/badge/sprints-7%E2%80%9316-A8EFC4?labelColor=0D1B2A">
+  <a href="LICENSE"><img alt="Código: MIT" src="https://img.shields.io/badge/c%C3%B3digo-MIT-6B7A8D?labelColor=0D1B2A"></a>
+  <a href="LICENSE-DOCS.md"><img alt="Docs: CC BY 4.0" src="https://img.shields.io/badge/docs-CC%20BY%204.0-6B7A8D?labelColor=0D1B2A"></a>
+</p>
+
 # Steely
 
 **Marketplace de hardware de TI reaproveitável, com laudo técnico por Inteligência Artificial.**
 
-Projeto acadêmico da **Escola de TI — UniCesumar** (2026).
+Projeto acadêmico da **Escola de TI — UniCesumar** (2026). Veja o [site do projeto](https://rafaeltudelar.github.io/steely/) com o Scanner IA em 3D e os protótipos navegáveis.
 
 > **Status: em desenvolvimento — 2º semestre de 2026 (Sprints 7–16).** A documentação está completa e os protótipos de tela estão sendo produzidos sprint a sprint. Quer ajudar? Veja [como contribuir](CONTRIBUTING.md).
 
@@ -39,6 +49,21 @@ A confiança vem de duas camadas: um **laudo técnico gerado por IA** (o Scanner
 
 ---
 
+## O app
+
+Protótipos de alta fidelidade da Sprint 13 — [todas as telas](docs/05-design/prototipos/) · [como fazer uma tela nova](docs/05-design/GUIA-DE-PROTOTIPOS.md).
+
+<p align="center">
+  <img src="docs/05-design/prototipos/png/001-home-feed.png" width="15%" alt="Home">
+  <img src="docs/05-design/prototipos/png/002-central-de-notificacoes.png" width="15%" alt="Notificações">
+  <img src="docs/05-design/prototipos/png/003-criar-anuncio-etapa-1-fotos.png" width="15%" alt="Criar anúncio: fotos">
+  <img src="docs/05-design/prototipos/png/004-criar-anuncio-etapa-2-detalhes.png" width="15%" alt="Criar anúncio: detalhes">
+  <img src="docs/05-design/prototipos/png/005-criar-anuncio-etapa-3-preco-e-entrega.png" width="15%" alt="Criar anúncio: preço e entrega">
+  <img src="docs/05-design/prototipos/png/006-criar-anuncio-etapa-4-revisao.png" width="15%" alt="Criar anúncio: revisão">
+</p>
+
+---
+
 ## Arquitetura em uma frase
 
 App **Expo** (Android) e SPA **React + Vite** (web) consomem uma API **FastAPI** (Python), que usa **Supabase** (PostgreSQL, Auth, Realtime, Storage) como banco e infraestrutura; o Scanner IA roda como um serviço separado com modelos **ONNX**.
@@ -63,6 +88,8 @@ Detalhes, diagrama de implantação e as 27 decisões de arquitetura (ADRs): [do
 | [`mobile/`](mobile/) | Aplicativo Android — Expo |
 | [`database/`](database/) | Banco de dados — scripts SQL do Supabase |
 | [`scanner/`](scanner/) | Scanner IA — visão computacional |
+| [`ferramentas/`](ferramentas/) | Scripts que geram e verificam as telas e os links |
+| [`site/`](site/) | Site do projeto (GitHub Pages) com a cena 3D e os protótipos navegáveis |
 
 ## Por onde começar a ler
 
@@ -100,6 +127,10 @@ Os documentos vigentes são os do 2º semestre. Os do 1º semestre ficam em [`do
 Participaram do 1º semestre: Guilherme Pitão Garcia e Victor Hugo Silva Garcia.
 
 A gestão foi compartilhada entre os colaboradores, com cerimônias Scrum semanais — veja [docs/01-gestao/scrum](docs/01-gestao/scrum/).
+
+## Como contribuir
+
+Toda mudança entra por Pull Request, com revisão e verificações automáticas. O passo a passo está em [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 

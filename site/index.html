@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steely — hardware usado, com laudo de IA</title>
+<meta name="description" content="Marketplace de hardware de TI reaproveitável com laudo técnico por Inteligência Artificial. Projeto acadêmico da Escola de TI — UniCesumar.">
+<meta property="og:title" content="Steely — hardware usado, com laudo de IA">
+<meta property="og:description" content="Marketplace de hardware de TI reaproveitável com Scanner IA, garantia em custódia e métricas ESG.">
+<meta name="theme-color" content="#070F18">
+<link rel="icon" href="assets/logo-steely.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo">
+  <a class="marca" href="#conteudo"><img src="assets/logo-steely.png" alt="Steely" width="112" height="36"></a>
+  <nav aria-label="Principal">
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#prototipos">Protótipos</a>
+    <a href="#equipe">Equipe</a>
+    <a class="botao fantasma pequeno" href="https://github.com/rafaeltudelar/steely">GitHub</a>
+  </nav>
+</header>
+
+<main id="conteudo">
+  <section class="hero">
+    <div class="hero-texto">
+      <span class="sobretitulo">Escola de TI · UniCesumar · 2026</span>
+      <h1>Hardware usado,<br><span class="verde">com laudo de IA.</span></h1>
+      <p class="lead">O Steely conecta quem tem peças de computador paradas com quem precisa delas. O Scanner IA identifica o componente pelas fotos, a comunidade valida e o pagamento fica em custódia até a entrega.</p>
+      <div class="acoes">
+        <a class="botao" href="#prototipos">Ver os protótipos</a>
+        <a class="botao fantasma" href="https://github.com/rafaeltudelar/steely/tree/main/docs">Ler a documentação</a>
+      </div>
+      <dl class="numeros">
+        <div><dt>58</dt><dd>casos de uso</dd></div>
+        <div><dt>27</dt><dd>decisões de arquitetura</dd></div>
+        <div><dt>16</dt><dd>sprints</dd></div>
+      </dl>
+    </div>
+
+    <figure class="palco" aria-label="Ilustração 3D: uma placa de vídeo sendo analisada pelo Scanner IA">
+      <canvas id="cena" aria-hidden="true"></canvas>
+      <div class="etiquetas" id="etiquetas" aria-hidden="true">
+        <span data-x="-1.6" data-y="1.15">RTX 3060 Ti 8GB</span>
+        <span data-x="-0.2" data-y="-1.2" class="forte">94% de confiança</span>
+        <span data-x="1.0" data-y="1.15">Estado: funciona</span>
+        <span data-x="1.9" data-y="-1.1" class="esg">+20 moedas</span>
+      </div>
+      <figcaption>Scanner IA · identificação por foto</figcaption>
+    </figure>
+  </section>
+
+  <section id="como-funciona" class="secao">
+    <h2>Confiança em três camadas</h2>
+    <p class="secao-lead">Comprar peça usada em grupo de mensagem é loteria. No Steely, cada anúncio passa por três filtros antes de chegar até você.</p>
+    <div class="cartoes">
+      <article class="cartao">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg>
+        <h3>Scanner IA</h3>
+        <p>Fotografe a etiqueta e o modelo é identificado com o grau de confiança. Abaixo de 80%, a pessoa confirma à mão.</p>
+      </article>
+      <article class="cartao">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <h3>Hardware Captcha</h3>
+        <p>A comunidade confere se o anúncio corresponde à peça das fotos e ganha moedas por isso.</p>
+      </article>
+      <article class="cartao">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+        <h3>Garantia de 7 dias</h3>
+        <p>O valor fica em custódia. A entrega é confirmada por QR Code, mesmo sem internet, e só então é liberado.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="prototipos" class="secao prototipos">
+    <div class="prototipos-texto">
+      <h2>Toque e navegue</h2>
+      <p class="secao-lead">Estas são as telas reais do app, as mesmas do Figma. Toque nos botões dentro do celular: o sino, o <strong>+</strong> do menu e os botões de cada etapa levam para a próxima tela.</p>
+      <ol class="lista-telas" id="lista-telas"></ol>
+      <p class="nota">Sprint 13 · Home, notificações e criação de anúncio. <a href="https://github.com/rafaeltudelar/steely/blob/main/docs/05-design/GUIA-DE-PROTOTIPOS.md">Como as telas são feitas →</a></p>
+    </div>
+    <div class="celular-moldura">
+      <div class="celular" id="celular">
+        <iframe id="tela" title="Protótipo do app Steely"></iframe>
+      </div>
+      <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="equipe" class="secao">
+    <h2>Equipe</h2>
+    <ul class="equipe">
+      <li><strong>Thiago Lopes Martins</strong><span>Product Owner · back-end</span></li>
+      <li><strong>Augusto Palma Guglielmi</strong><span>Regras de negócio · LGPD · dados</span></li>
+      <li><strong>Fabricio Notoya Thomas</strong><span>Scanner IA · banco · segurança</span></li>
+      <li><strong>Pietro Pasqual Silva</strong><span>Front-end web</span></li>
+      <li><strong>Rafael Tudela Rizental</strong><span>Mobile · prototipação · identidade visual</span></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="rodape">
+  <img src="assets/logo-steely.png" alt="Steely" width="94" height="30">
+  <p>Projeto acadêmico da Escola de TI — UniCesumar. Código sob MIT, documentação sob CC BY 4.0.</p>
+  <a href="https://github.com/rafaeltudelar/steely/blob/main/CONTRIBUTING.md">Como contribuir</a>
+</footer>
+
+<script type="module" src="cena.js"></script>
+<script type="module" src="prototipos.js"></script>
+</body>
+</html>
