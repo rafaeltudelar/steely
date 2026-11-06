@@ -1,0 +1,36 @@
+name: Nova tela
+description: Pedir ou acompanhar uma tela de protótipo
+title: "[Tela NNN] "
+labels: ["design"]
+body:
+  - type: input
+    id: jira
+    attributes:
+      label: Tarefa no Jira
+      placeholder: EDTS-258
+    validations:
+      required: true
+  - type: input
+    id: numero
+    attributes:
+      label: Número e nome da tela
+      placeholder: 007 Detalhe do anúncio
+    validations:
+      required: true
+  - type: input
+    id: casos
+    attributes:
+      label: Casos de uso (STY)
+      placeholder: STY016, STY020
+  - type: textarea
+    id: conteudo
+    attributes:
+      label: O que a tela precisa mostrar
+      description: Campos, botões, estados e regras de negócio que aparecem na tela
+    validations:
+      required: true
+  - type: textarea
+    id: fluxo
+    attributes:
+      label: De onde vem e para onde vai
+      placeholder: Vem da Home ao tocar num card; o botão "Fazer proposta" abre a tela 008

@@ -1,0 +1,33 @@
+name: Verificações
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    name: Links do repositório
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python ferramentas/verificar_links.py
+
+  telas:
+    name: Telas de protótipo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Código das telas (paleta, fontes, estrutura)
+        run: python ferramentas/prototipos/verificar_telas.py
+      - name: Telas no navegador (layout e fontes carregadas)
+        run: python ferramentas/prototipos/conferir_telas.py --sem-png

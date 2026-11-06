@@ -1,0 +1,14 @@
+name: Sugestão
+description: Uma ideia para o produto, a documentação ou o repositório
+labels: ["sugestão"]
+body:
+  - type: textarea
+    id: ideia
+    attributes:
+      label: A ideia
+    validations:
+      required: true
+  - type: textarea
+    id: porque
+    attributes:
+      label: Que problema ela resolve
