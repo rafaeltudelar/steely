@@ -4,7 +4,7 @@
 
 Projeto acadêmico da **Escola de TI — UniCesumar** (2026).
 
-> **Status: encerrado.** O desenvolvimento não terá continuidade. Este repositório preserva toda a documentação e o código produzidos pela equipe, como registro do projeto.
+> **Status: em desenvolvimento — 2º semestre de 2026 (Sprints 7–16).** A documentação está completa e os protótipos de tela estão sendo produzidos sprint a sprint. Quer ajudar? Veja [como contribuir](CONTRIBUTING.md).
 
 ---
 
@@ -100,3 +100,9 @@ Os documentos vigentes são os do 2º semestre. Os do 1º semestre ficam em [`do
 Participaram do 1º semestre: Guilherme Pitão Garcia e Victor Hugo Silva Garcia.
 
 A gestão foi compartilhada entre os colaboradores, com cerimônias Scrum semanais — veja [docs/01-gestao/scrum](docs/01-gestao/scrum/).
+
+---
+
+## Licença
+
+Código sob a [licença MIT](LICENSE). Documentação, protótipos e manual da marca sob a [CC BY 4.0](LICENSE-DOCS.md) — use à vontade, citando a equipe.
