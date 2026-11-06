@@ -126,6 +126,23 @@ function iniciar() {
   const poeira = new THREE.Points(geoPts, new THREE.PointsMaterial({ color: COR.esg, size: 0.025, transparent: true, opacity: 0.5 }));
   cena.add(poeira);
 
+  // Base holográfica: anel que pulsa sob a placa e uma grade que some nas bordas
+  const base = new THREE.Group();
+  base.position.y = -1.55;
+  cena.add(base);
+  const anel = new THREE.Mesh(new THREE.RingGeometry(2.3, 2.36, 96),
+    new THREE.MeshBasicMaterial({ color: COR.verde, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
+  anel.rotation.x = -Math.PI / 2;
+  base.add(anel);
+  const onda = anel.clone();
+  onda.material = anel.material.clone();
+  base.add(onda);
+  const grade = new THREE.GridHelper(12, 30, COR.verde, COR.borda);
+  grade.material.transparent = true;
+  grade.material.opacity = 0.16;
+  grade.material.depthWrite = false;
+  base.add(grade);
+
   // ---------- Etiquetas (HTML) presas a pontos da placa ----------
   const ancoras = etiquetas.map((el) => new THREE.Vector3(+el.dataset.x, +el.dataset.y, 0.3));
   const tmp = new THREE.Vector3();
@@ -141,11 +158,13 @@ function iniciar() {
   }
 
   // ---------- Tamanho, mouse, visibilidade ----------
+  let zBase = 8.4;
   function ajustar() {
     const w = palco.clientWidth, h = palco.clientHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    camera.position.z = w / h < 1.1 ? 11 : 8.4; // telas estreitas: afasta a câmera
+    zBase = w / h < 1.1 ? 11 : 8.4; // telas estreitas: afasta a câmera
+    camera.position.z = zBase;
     camera.updateProjectionMatrix();
   }
   new ResizeObserver(ajustar).observe(palco);
@@ -192,8 +211,25 @@ function iniciar() {
     tmp.set(x, 0, 1.2); gpu.localToWorld(tmp); luzScan.position.copy(tmp);
 
     helices.forEach((h, i) => { h.rotation.z -= dt * (i ? 7 : 6); });
-    gpu.rotation.y += ((-0.38 + mouse.x * 0.35) - gpu.rotation.y) * 0.06;
-    gpu.rotation.x += ((-0.18 + mouse.y * 0.18) - gpu.rotation.x) * 0.06;
+
+    // Entrada: a câmera se aproxima e a placa gira para a posição (1,8 s)
+    const e = Math.min(t / 1.8, 1);
+    const entrada = 1 - Math.pow(1 - e, 3);
+    camera.position.z = zBase + (1 - entrada) * 4;
+    // Rolagem: a placa vira um pouco enquanto o topo sai da tela
+    const r = palco.getBoundingClientRect();
+    const rolagem = Math.min(Math.max(-r.top / r.height, 0), 1);
+    const alvoY = -0.38 + mouse.x * 0.35 - (1 - entrada) * 1.2 + rolagem * 0.9;
+    const alvoX = -0.18 + mouse.y * 0.18 + rolagem * 0.35;
+    gpu.rotation.y += (alvoY - gpu.rotation.y) * 0.06;
+    gpu.rotation.x += (alvoX - gpu.rotation.x) * 0.06;
+
+    // Anel: pulsa com a varredura; a onda se expande e some
+    const pulso = (t % 2.2) / 2.2;
+    onda.scale.setScalar(1 + pulso * 0.6);
+    onda.material.opacity = 0.45 * (1 - pulso);
+    anel.material.opacity = ida < 1 ? 0.75 : 0.4;
+    base.rotation.y = t * 0.05;
     gpu.position.y = Math.sin(t * 1.1) * 0.06;
     poeira.rotation.y = t * 0.02;
 
