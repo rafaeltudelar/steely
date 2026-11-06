@@ -1,3 +1,32 @@
-# Quem precisa revisar cada parte do repositório.
-# Quando a equipe enviar os usuários do GitHub, adicione-os aqui (ex.: docs/04-arquitetura/ @usuario).
-* @rafaeltudelar
+# Quem revisa cada parte do repositório (a última regra que combina vale).
+# Cada pessoa só aparece como revisora depois de aceitar o convite de colaboradora.
+
+# Padrão: mantenedor e Product Owner
+*                       @rafaeltudelar @7thiago
+
+# Gestão e back-end — Thiago (PO)
+/docs/01-gestao/        @7thiago
+/backend/               @7thiago
+
+# Requisitos, regras de negócio, LGPD e modelagem — Augusto
+/docs/02-requisitos/    @AugustoPalma
+/docs/03-modelagem/     @AugustoPalma
+
+# Arquitetura — toda a equipe (cada ADR tem um responsável)
+/docs/04-arquitetura/   @7thiago @AugustoPalma @FabriThomas @PietroPasqual @rafaeltudelar
+
+# Scanner IA, banco de dados e segurança — Fabricio
+/scanner/               @FabriThomas
+/database/              @FabriThomas
+
+# Front-end web — Pietro
+/web/                   @PietroPasqual
+
+# Mobile, design, protótipos, ferramentas e site — Rafael
+/mobile/                @rafaeltudelar
+/docs/05-design/        @rafaeltudelar
+/ferramentas/           @rafaeltudelar
+/site/                  @rafaeltudelar
+
+# Configuração do repositório
+/.github/               @rafaeltudelar
