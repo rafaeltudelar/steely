@@ -51,7 +51,7 @@ A confiança vem de duas camadas: um **laudo técnico gerado por IA** (o Scanner
 
 ## O app
 
-Protótipos de alta fidelidade da Sprint 13 — [todas as telas](docs/05-design/prototipos/) · [como fazer uma tela nova](docs/05-design/GUIA-DE-PROTOTIPOS.md).
+Protótipos de alta fidelidade da Sprint 13 — [todas as telas](docs/05-design/prototipos/) · [como fazer uma tela nova](docs/05-design/PASSO-A-PASSO-SIMPLES.md) ([guia completo](docs/05-design/GUIA-DE-PROTOTIPOS.md)).
 
 <p align="center">
   <img src="docs/05-design/prototipos/png/001-home-feed.png" width="15%" alt="Home">
