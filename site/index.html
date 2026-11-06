@@ -14,16 +14,27 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilo.css">
 <script type="importmap">
-{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "motion": "https://cdn.jsdelivr.net/npm/motion@12.4.7/+esm"
+} }
+</script>
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('anim');
+    setTimeout(function () { if (!window.__movimento) document.documentElement.classList.remove('anim'); }, 2500);
+  }
 </script>
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div class="progresso" aria-hidden="true"></div>
 
 <header class="topo">
   <a class="marca" href="#conteudo"><img src="assets/logo-steely.png" alt="Steely" width="112" height="36"></a>
   <nav aria-label="Principal">
     <a href="#como-funciona">Como funciona</a>
+    <a href="#jornada">Jornada</a>
     <a href="#prototipos">Protótipos</a>
     <a href="#equipe">Equipe</a>
     <a class="botao fantasma pequeno" href="https://github.com/rafaeltudelar/steely">GitHub</a>
@@ -33,21 +44,21 @@
 <main id="conteudo">
   <section class="hero">
     <div class="hero-texto">
-      <span class="sobretitulo">Escola de TI · UniCesumar · 2026</span>
-      <h1>Hardware usado,<br><span class="verde">com laudo de IA.</span></h1>
-      <p class="lead">O Steely conecta quem tem peças de computador paradas com quem precisa delas. O Scanner IA identifica o componente pelas fotos, a comunidade valida e o pagamento fica em custódia até a entrega.</p>
-      <div class="acoes">
+      <span class="sobretitulo" data-hero>Escola de TI · UniCesumar · 2026</span>
+      <h1><span class="linha" data-hero>Hardware usado,</span> <span class="linha verde" data-hero>com laudo de IA.</span></h1>
+      <p class="lead" data-hero>O Steely conecta quem tem peças de computador paradas com quem precisa delas. O Scanner IA identifica o componente pelas fotos, a comunidade valida e o pagamento fica em custódia até a entrega.</p>
+      <div class="acoes" data-hero>
         <a class="botao" href="#prototipos">Ver os protótipos</a>
         <a class="botao fantasma" href="https://github.com/rafaeltudelar/steely/tree/main/docs">Ler a documentação</a>
       </div>
-      <dl class="numeros">
-        <div><dt>58</dt><dd>casos de uso</dd></div>
-        <div><dt>27</dt><dd>decisões de arquitetura</dd></div>
-        <div><dt>16</dt><dd>sprints</dd></div>
+      <dl class="numeros" data-hero>
+        <div><dt data-contar="58">58</dt><dd>casos de uso</dd></div>
+        <div><dt data-contar="27">27</dt><dd>decisões de arquitetura</dd></div>
+        <div><dt data-contar="16">16</dt><dd>sprints</dd></div>
       </dl>
     </div>
 
-    <figure class="palco" aria-label="Ilustração 3D: uma placa de vídeo sendo analisada pelo Scanner IA">
+    <figure class="palco" data-hero aria-label="Ilustração 3D: uma placa de vídeo sendo analisada pelo Scanner IA">
       <canvas id="cena" aria-hidden="true"></canvas>
       <div class="etiquetas" id="etiquetas" aria-hidden="true">
         <span data-x="-1.6" data-y="1.15">RTX 3060 Ti 8GB</span>
@@ -60,9 +71,9 @@
   </section>
 
   <section id="como-funciona" class="secao">
-    <h2>Confiança em três camadas</h2>
-    <p class="secao-lead">Comprar peça usada em grupo de mensagem é loteria. No Steely, cada anúncio passa por três filtros antes de chegar até você.</p>
-    <div class="cartoes">
+    <h2 data-revelar>Confiança em três camadas</h2>
+    <p class="secao-lead" data-revelar>Comprar peça usada em grupo de mensagem é loteria. No Steely, cada anúncio passa por três filtros antes de chegar até você.</p>
+    <div class="cartoes" data-grupo>
       <article class="cartao">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg>
         <h3>Scanner IA</h3>
@@ -81,10 +92,30 @@
     </div>
   </section>
 
+  <section id="jornada" class="secao jornada">
+    <h2 data-revelar>Do anúncio à entrega</h2>
+    <p class="secao-lead" data-revelar>Role a página e acompanhe uma placa de vídeo saindo da gaveta de um vendedor em Maringá até o PC de quem precisava dela.</p>
+    <div class="jornada-grade">
+    <ol class="trilha" id="trilha">
+      <li class="trilha-linha" aria-hidden="true"><span></span></li>
+      <li class="etapa"><span class="ponto"></span><div><b>1 · Anúncio em segundos</b><p>O vendedor fotografa a peça. O Scanner IA preenche modelo, estado e preço sugerido.</p></div></li>
+      <li class="etapa"><span class="ponto"></span><div><b>2 · Validação da comunidade</b><p>Usuários confirmam no Hardware Captcha que as fotos batem com o anúncio e ganham moedas.</p></div></li>
+      <li class="etapa"><span class="ponto"></span><div><b>3 · Proposta e pagamento em custódia</b><p>O comprador negocia no chat e paga. O valor fica guardado, não vai direto para o vendedor.</p></div></li>
+      <li class="etapa"><span class="ponto"></span><div><b>4 · Entrega com QR Code</b><p>No encontro, o QR Code confirma a entrega mesmo sem internet e começam os 7 dias de garantia.</p></div></li>
+      <li class="etapa"><span class="ponto"></span><div><b>5 · Impacto medido</b><p>Cada peça reaproveitada vira métrica ESG: quilos de lixo eletrônico que não foram para o aterro.</p></div></li>
+    </ol>
+    <aside class="painel-etapa" aria-hidden="true">
+      <svg class="anel-etapa" viewBox="0 0 120 120"><circle cx="60" cy="60" r="52"/><circle class="progresso-anel" cx="60" cy="60" r="52" pathLength="1"/></svg>
+      <div class="painel-texto"><span class="painel-num" id="painel-num">01</span><span class="painel-nome" id="painel-nome">Anúncio em segundos</span></div>
+      <span class="painel-rodape">Etapa <b id="painel-de">1</b> de 5</span>
+    </aside>
+    </div>
+  </section>
+
   <section id="prototipos" class="secao prototipos">
     <div class="prototipos-texto">
-      <h2>Toque e navegue</h2>
-      <p class="secao-lead">Estas são as telas reais do app, as mesmas do Figma. Toque nos botões dentro do celular: o sino, o <strong>+</strong> do menu e os botões de cada etapa levam para a próxima tela.</p>
+      <h2 data-revelar>Toque e navegue</h2>
+      <p class="secao-lead" data-revelar>Estas são as telas reais do app, as mesmas do Figma. Toque nos botões dentro do celular: o sino, o <strong>+</strong> do menu e os botões de cada etapa levam para a próxima tela.</p>
       <ol class="lista-telas" id="lista-telas"></ol>
       <p class="nota">Sprint 13 · Home, notificações e criação de anúncio. <a href="https://github.com/rafaeltudelar/steely/blob/main/docs/05-design/GUIA-DE-PROTOTIPOS.md">Como as telas são feitas →</a></p>
     </div>
@@ -97,8 +128,8 @@
   </section>
 
   <section id="equipe" class="secao">
-    <h2>Equipe</h2>
-    <ul class="equipe">
+    <h2 data-revelar>Equipe</h2>
+    <ul class="equipe" data-grupo>
       <li><strong>Thiago Lopes Martins</strong><span>Product Owner · back-end</span></li>
       <li><strong>Augusto Palma Guglielmi</strong><span>Regras de negócio · LGPD · dados</span></li>
       <li><strong>Fabricio Notoya Thomas</strong><span>Scanner IA · banco · segurança</span></li>
@@ -116,5 +147,6 @@
 
 <script type="module" src="cena.js"></script>
 <script type="module" src="prototipos.js"></script>
+<script type="module" src="movimento.js"></script>
 </body>
 </html>

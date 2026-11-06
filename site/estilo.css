@@ -22,6 +22,11 @@ a:hover { text-decoration: underline; }
 .pular { position: absolute; left: -999px; top: 8px; background: var(--verde); color: var(--charcoal); padding: 8px 14px; border-radius: 8px; z-index: 10; }
 .pular:focus { left: 16px; }
 .verde { color: var(--verde); }
+h1 .linha { display: inline-block; }
+
+/* Movimento (movimento.js): começa escondido só quando o Motion vai animar */
+.anim [data-hero], .anim [data-revelar], .anim [data-grupo] > * { opacity: 0; }
+.progresso { position: fixed; left: 0; top: 0; z-index: 20; width: 100%; height: 3px; background: linear-gradient(90deg, var(--verde), var(--esg)); transform-origin: 0 50%; transform: scaleX(0); pointer-events: none; }
 
 /* Topo */
 .topo { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px clamp(16px, 5vw, 64px); background: rgba(7, 15, 24, 0.82); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(26, 50, 80, 0.6); }
@@ -70,11 +75,38 @@ h2 { font-family: var(--titulo); font-weight: 700; font-size: clamp(30px, 4vw, 4
 .secao-lead { margin-top: 14px; max-width: 40em; color: var(--cinza); font-size: 17px; }
 .secao-lead strong { color: var(--branco); }
 .cartoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 36px; }
-.cartao { padding: 26px; border-radius: 18px; background: var(--superficie); border: 1px solid var(--borda); transition: border-color .25s, transform .25s cubic-bezier(.2,.8,.2,1); }
-.cartao:hover { border-color: rgba(29, 219, 106, 0.5); transform: translateY(-3px); }
+.cartao { position: relative; padding: 26px; border-radius: 18px; background: var(--superficie); border: 1px solid var(--borda); transition: border-color .25s; overflow: hidden; }
+.cartao::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgba(29, 219, 106, 0.14), transparent 60%); }
+.cartao:hover { border-color: rgba(29, 219, 106, 0.5); }
+.cartao:hover::before { opacity: 1; }
+.cartao > * { position: relative; }
 .cartao svg { width: 44px; height: 44px; padding: 10px; border-radius: 12px; background: rgba(29, 219, 106, 0.12); fill: none; stroke: var(--verde); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .cartao h3 { margin-top: 18px; font-family: var(--titulo); font-weight: 500; font-size: 20px; }
 .cartao p { margin-top: 8px; color: var(--cinza); font-size: 15px; }
+
+/* Jornada */
+.trilha { position: relative; list-style: none; margin-top: 44px; max-width: 720px; display: grid; gap: 28px; padding-left: 44px; }
+.trilha-linha { position: absolute; left: 13px; top: 8px; bottom: 8px; width: 2px; background: var(--borda); border-radius: 2px; }
+.trilha-linha span { position: absolute; inset: 0; background: linear-gradient(180deg, var(--verde), var(--esg)); transform-origin: top; border-radius: 2px; }
+.etapa { position: relative; display: flex; gap: 16px; transition: opacity .4s; }
+.etapa .ponto { position: absolute; left: -38px; top: 4px; width: 16px; height: 16px; border-radius: 999px; background: var(--verde); border: 3px solid var(--fundo); box-shadow: 0 0 0 2px var(--verde), 0 0 18px rgba(29, 219, 106, 0.6); transition: background-color .3s, box-shadow .3s, transform .3s cubic-bezier(.2,.9,.25,1.2); }
+.etapa b { font-family: var(--titulo); font-weight: 700; font-size: 20px; }
+.etapa p { margin-top: 6px; color: var(--cinza); max-width: 36em; }
+.etapa.apagada { opacity: .45; }
+.etapa.apagada .ponto { background: var(--superficie); box-shadow: 0 0 0 2px var(--borda); transform: scale(.8); }
+
+.jornada-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 380px); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.painel-etapa { position: sticky; top: 140px; margin-top: 44px; aspect-ratio: 1; border-radius: 28px; border: 1px solid var(--borda);
+  background: radial-gradient(circle at 50% 40%, rgba(29, 219, 106, 0.12), transparent 65%), var(--charcoal); display: grid; place-items: center; overflow: hidden; }
+.anel-etapa { position: absolute; width: 78%; height: 78%; transform: rotate(-90deg); }
+.anel-etapa circle { fill: none; stroke: var(--borda); stroke-width: 3; }
+.anel-etapa .progresso-anel { stroke: var(--verde); stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 6px rgba(29, 219, 106, 0.7)); }
+.painel-texto { position: relative; text-align: center; display: grid; gap: 6px; max-width: 60%; }
+.painel-num { font: 700 64px/1 var(--titulo); color: var(--verde); letter-spacing: -0.02em; }
+.painel-nome { font: 500 18px/1.25 var(--titulo); }
+.painel-rodape { position: absolute; bottom: 20px; font-size: 13px; color: var(--cinza); }
+.painel-rodape b { color: var(--branco); }
 
 /* Protótipos */
 .prototipos { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(32px, 6vw, 80px); align-items: center; }
@@ -84,7 +116,7 @@ h2 { font-family: var(--titulo); font-weight: 700; font-size: clamp(30px, 4vw, 4
 .lista-telas button[aria-current="true"] { color: var(--branco); border-color: var(--verde); background: rgba(29, 219, 106, 0.07); }
 .lista-telas .num { font: 700 13px/1 var(--titulo); color: var(--verde); min-width: 30px; }
 .nota { margin-top: 20px; font-size: 14px; color: var(--cinza); }
-.celular-moldura { --e: 1; position: relative; width: calc(375px * var(--e)); height: calc(812px * var(--e)); justify-self: center; }
+.celular-moldura { --e: 1; position: relative; transform-style: preserve-3d; width: calc(375px * var(--e)); height: calc(812px * var(--e)); justify-self: center; }
 .celular { position: absolute; left: 0; top: 0; width: 375px; height: 812px; border-radius: 44px; overflow: hidden; transform: scale(var(--e)); transform-origin: top left;
   box-shadow: 0 40px 120px rgba(29, 219, 106, 0.12), 0 0 0 1px rgba(26, 50, 80, 0.6); background: var(--charcoal); }
 .celular iframe { position: absolute; left: -773px; top: -194px; width: 1920px; height: 1200px; border: 0; transition: opacity .18s ease; }
@@ -101,11 +133,13 @@ h2 { font-family: var(--titulo); font-weight: 700; font-size: clamp(30px, 4vw, 4
 .rodape p { flex: 1; min-width: 220px; }
 
 @media (max-width: 900px) {
-  .hero, .prototipos { grid-template-columns: 1fr; }
+  .hero, .prototipos, .jornada-grade { grid-template-columns: 1fr; }
+  .painel-etapa { display: none; }
   .hero { min-height: 0; }
   .topo nav a:not(.botao) { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .painel-etapa { display: none; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
