@@ -61,7 +61,7 @@ Exemplos:
 
 ## Telas e protótipos
 
-Siga o [Guia de protótipos](docs/05-design/GUIA-DE-PROTOTIPOS.md). Em resumo:
+Primeira vez? Siga o [Passo a passo simples](docs/05-design/PASSO-A-PASSO-SIMPLES.md), clique por clique. O [Guia de protótipos](docs/05-design/GUIA-DE-PROTOTIPOS.md) tem todos os detalhes. Em resumo:
 
 1. Gere o HTML da tela (com Claude, Gemini, ChatGPT ou outra IA) em `docs/05-design/prototipos/html/NNN-nome-da-tela.html`.
 2. Rode `python3 ferramentas/prototipos/verificar_telas.py` e `python3 ferramentas/prototipos/conferir_telas.py NNN` até ficar tudo ✅.

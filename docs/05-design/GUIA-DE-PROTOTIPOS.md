@@ -4,6 +4,8 @@
 
 Este guia ensina qualquer pessoa da equipe a fazer **uma tela de protótipo nova**, igual às que já estão aprovadas, usando **Claude**, **Gemini**, **ChatGPT** ou outra IA. A IA escreve a tela em HTML, dois scripts conferem se ela segue o Design System e o plugin **html.to.design** leva a tela para o Figma.
 
+> 🟢 **Primeira vez ou prefere sem terminal?** Siga o [Passo a passo simples](PASSO-A-PASSO-SIMPLES.md): GitHub Desktop + IA no navegador, clique por clique.
+
 > **Por que HTML e não direto no Figma?** Porque o HTML pode ser conferido por máquina: cor errada, fonte errada ou texto escondido atrás do rodapé são reprovados antes de chegar ao Figma. Assim todas as telas ficam iguais, não importa quem fez nem qual IA usou.
 
 ## Sumário
