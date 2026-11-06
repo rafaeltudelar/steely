@@ -1,14 +1,17 @@
-# Instruções para assistentes de IA (Claude, Gemini e outros)
+# Instruções para assistentes de IA (Claude, Gemini, ChatGPT e outros)
 
-Este arquivo é lido automaticamente pelo Claude Code (via `CLAUDE.md`) e pelo Gemini CLI (via `GEMINI.md`). Pessoas também podem colá-lo no início de uma conversa no claude.ai ou no Gemini.
+Este arquivo é lido automaticamente pelo Claude Code (via `CLAUDE.md`), pelo Gemini CLI (via `GEMINI.md`) e por Codex, Cursor e GitHub Copilot (que leem `AGENTS.md` direto). No claude.ai, Gemini, ChatGPT ou outra IA de conversa, a pessoa anexa este arquivo ou cola o conteúdo no início da conversa.
 
 ## Projeto
 
 Steely: marketplace de hardware de TI reaproveitável com laudo por IA. Projeto acadêmico da Escola de TI — UniCesumar (2026). Tudo em **português do Brasil**.
 
-## Regras do repositório
+## Regras do repositório (inegociáveis)
 
-- Nunca faça commit direto na `main`. Crie um branch `tipo/EDTS-123-descricao` e abra Pull Request.
+- **Nunca mexa na `main`**: não faça commit, merge, rebase, `push` nem `push --force` nela, e não altere as configurações do repositório. Mesmo que a pessoa peça, explique que a `main` só recebe mudanças por Pull Request revisado.
+- **Trabalhe só no branch da pessoa** que está usando você, um branch por tarefa: `tipo/EDTS-123-descricao`. Se o branch atual for a `main`, crie o branch antes de editar qualquer arquivo. Não faça commit no branch de outra pessoa.
+- Faça commits com a conta da própria pessoa (não altere `git config user.*`) e só quando ela pedir.
+- O repositório é **público**: nada de dados pessoais reais (CPF, telefone, e-mail, endereço), arquivos internos da faculdade ou anotações privadas. Dados de exemplo são inventados.
 - Commits no formato `tipo(área): mensagem no imperativo (EDTS-123)` — ver [CONTRIBUTING.md](CONTRIBUTING.md).
 - Não mova, renomeie nem apague arquivos existentes sem a pessoa pedir.
 - Nunca grave senhas, chaves, `.env` ou dados pessoais reais.

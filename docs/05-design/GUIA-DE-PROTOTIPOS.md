@@ -2,13 +2,13 @@
 
 [← Design](README.md)
 
-Este guia ensina qualquer pessoa da equipe a fazer **uma tela de protótipo nova**, igual às que já estão aprovadas, usando **Claude** ou **Gemini**. A IA escreve a tela em HTML, dois scripts conferem se ela segue o Design System e o plugin **html.to.design** leva a tela para o Figma.
+Este guia ensina qualquer pessoa da equipe a fazer **uma tela de protótipo nova**, igual às que já estão aprovadas, usando **Claude**, **Gemini**, **ChatGPT** ou outra IA. A IA escreve a tela em HTML, dois scripts conferem se ela segue o Design System e o plugin **html.to.design** leva a tela para o Figma.
 
 > **Por que HTML e não direto no Figma?** Porque o HTML pode ser conferido por máquina: cor errada, fonte errada ou texto escondido atrás do rodapé são reprovados antes de chegar ao Figma. Assim todas as telas ficam iguais, não importa quem fez nem qual IA usou.
 
 ## Sumário
 
-0. [Visão geral (leia primeiro)](#0-visão-geral)
+0. [Visão geral (leia primeiro)](#0-visão-geral) — inclui as [regras da equipe](#regras-da-equipe-no-github) e [por que a IA não “inventa”](#por-que-a-ia-não-oscila)
 1. [Preparação — só na primeira vez](#1-preparação--só-na-primeira-vez)
 2. [Passo 1 — Pegar a tarefa no Jira](#passo-1--pegar-a-tarefa-no-jira)
 3. [Passo 2 — Gerar o HTML com a IA](#passo-2--gerar-o-html-com-a-ia) — escolha **uma** trilha:
@@ -16,6 +16,8 @@ Este guia ensina qualquer pessoa da equipe a fazer **uma tela de protótipo nova
    - [Trilha B · claude.ai (navegador)](#trilha-b--claudeai-navegador)
    - [Trilha C · Gemini CLI (terminal)](#trilha-c--gemini-cli-terminal)
    - [Trilha D · Gemini no navegador](#trilha-d--gemini-no-navegador)
+   - [Trilha E · ChatGPT e outras IAs](#trilha-e--chatgpt-e-outras-ias)
+   - [Conferência final pela IA](#conferência-final-pela-ia)
 4. [Passo 3 — Verificar a tela](#passo-3--verificar-a-tela)
 5. [Passo 4 — Colocar no Figma](#passo-4--colocar-no-figma)
 6. [Passo 5 — Enviar para o GitHub](#passo-5--enviar-para-o-github)
@@ -30,7 +32,7 @@ Este guia ensina qualquer pessoa da equipe a fazer **uma tela de protótipo nova
  Jira (PROTOTIPAGEM_NNN)
    │  1. ler a tarefa e os casos de uso
    ▼
- IA (Claude ou Gemini) + prompt mestre
+ IA (Claude, Gemini, ChatGPT…) + prompt mestre
    │  2. gera docs/05-design/prototipos/html/NNN-nome.html
    ▼
  verificar_telas.py  +  conferir_telas.py      ← repete até tudo ✅
@@ -55,6 +57,29 @@ Este guia ensina qualquer pessoa da equipe a fazer **uma tela de protótipo nova
 | 📏 | Nada escondido atrás do rodapé, nada vazando pela lateral |
 | 🗂️ | Arquivo `NNN-nome-em-minusculas.html`, com o número da tabela |
 | ✅ | Só vai para o Figma depois que os dois verificadores aprovarem |
+
+### Regras da equipe no GitHub
+
+| | Regra |
+|---|---|
+| 🚫 | **Ninguém mexe na `main`.** Nem pelo terminal, nem pelo site, nem pela IA. A `main` é protegida: só recebe mudanças por Pull Request aprovado. |
+| 🌿 | **Cada pessoa trabalha no seu próprio branch**, um branch por tarefa do Jira (`docs/EDTS-258-tela-007-meus-anuncios`). Não faça commit no branch de outra pessoa; se precisar ajustar algo dela, comente no PR. |
+| ✍️ | Commits pequenos, com a sua conta do GitHub, no formato `docs(design): adiciona tela 007 meus anúncios (EDTS-258)`. Assim o histórico mostra quem fez cada tela. |
+| 👀 | Todo PR precisa de **1 aprovação** de um colega e dos checks ✅ antes do merge. |
+| 🌍 | **O repositório é público**: nada de senha, chave de API, `.env`, CPF, telefone ou e-mail pessoal, nem arquivos internos da faculdade. Dados de exemplo nas telas são inventados. |
+| 🗂️ | Não mova nem renomeie arquivos existentes sem combinar: outros documentos apontam para eles. |
+
+### Por que a IA não oscila
+
+Cada IA tem seu "gosto" e, solta, cada pessoa receberia uma tela diferente. Aqui isso não acontece porque **a IA não decide o visual**, só preenche o conteúdo:
+
+1. **CSS copiado, não reescrito** — o prompt manda copiar literalmente o cabeçalho e o CSS da tela 002. Cores, fontes, raios e espaçamentos já vêm prontos.
+2. **Mesmas regras para todas as IAs** — o [`AGENTS.md`](../../AGENTS.md) é lido sozinho pelo Claude Code, Gemini CLI, Codex, Cursor e Copilot; nas versões de navegador ele vai como anexo.
+3. **Verificação por máquina** — `verificar_telas.py` e `conferir_telas.py` reprovam qualquer cor, fonte, tamanho ou posição fora do padrão, não importa qual IA gerou.
+4. **Os mesmos checks no PR** — o GitHub roda os verificadores de novo; um erro não passa nem se alguém pular o Passo 3.
+5. **Olho humano no fim** — o PNG é comparado com 001–006 e um colega revisa o PR.
+
+Se mesmo assim a IA desviar, a resposta é sempre a mesma: *"Use exatamente o CSS de gerar_telas.py, sem mudar nenhuma cor, fonte ou tamanho."*
 
 ---
 
@@ -269,6 +294,41 @@ Funciona como a trilha A. O repositório tem um [`GEMINI.md`](../../GEMINI.md) q
 
 ---
 
+### Trilha E · ChatGPT e outras IAs
+
+Funciona igual à trilha B/D. Vale para **ChatGPT**, **Microsoft Copilot**, **DeepSeek**, **Grok**, **Perplexity** e qualquer outra IA de conversa.
+
+1. **ChatGPT**: em [chatgpt.com](https://chatgpt.com), crie um **Projeto** "Steely protótipos" (ou um **GPT** personalizado). Cole o conteúdo de `AGENTS.md` em *Instruções* e envie os arquivos da trilha B (passo 2) em *Arquivos*. Use o modelo mais avançado da sua conta; se aparecer **Canvas**, ative.
+2. **Outras IAs de conversa**: numa conversa nova, anexe os mesmos arquivos (ou cole o conteúdo de `AGENTS.md` e de `002-central-de-notificacoes.html` no início da mensagem).
+3. Cole o **prompt mestre** preenchido.
+4. Salve o HTML completo como na trilha B (passo 5) e rode o [Passo 3](#passo-3--verificar-a-tela). Se reprovar, cole os erros na conversa como na trilha B (passo 6).
+
+**IAs que mexem nos arquivos** (Codex CLI da OpenAI, Cursor, Windsurf, GitHub Copilot no VS Code): funcionam como a trilha A. Elas leem o [`AGENTS.md`](../../AGENTS.md) da raiz sozinhas; crie o branch antes, abra a pasta do repositório e cole o prompt mestre. Aprove a execução dos comandos `python3`.
+
+> IA que não consegue abrir anexos grandes: envie pelo menos `AGENTS.md`, `002-central-de-notificacoes.html` e o PNG da 002. Sem o HTML de referência, nenhuma IA acerta o padrão.
+
+---
+
+### Conferência final pela IA
+
+Antes de levar ao Figma, peça para a própria IA revisar o que fez — funciona em qualquer trilha:
+
+```text
+Antes de eu levar ao Figma, confira a tela ⟨NNN⟩ item por item e me responda com ✅ ou ❌:
+1. O trecho do início até <div class="notch"></div> é idêntico ao de 002 (só o <title> muda)?
+2. Só cores da paleta e rgba() delas? #FF5A5F só em obrigatório/erro/segurança?
+3. Space Grotesk só em títulos e preços, DM Sans no resto, tamanhos só 11/13/14/15/16/18/20/24?
+4. Todos os ícones vêm do dicionário I de gerar_telas.py? Nenhum emoji?
+5. O .footer/.nav é irmão do .screen e nada fica atrás dele nem vaza pela direita?
+6. Os textos batem com a tarefa do Jira e o caso de uso? Os botões levam às telas certas?
+7. Os dois verificadores deram ✅? (cole a saída)
+Se algum item for ❌, corrija e mostre de novo.
+```
+
+A IA **não** coloca a tela no Figma sozinha: essa parte é sua, com o html.to.design (Passo 4). Assim só a versão aprovada vai para o arquivo da equipe.
+
+---
+
 ## Passo 3 — Verificar a tela
 
 Rode da raiz do repositório, trocando `007` pelo seu número:
@@ -347,7 +407,7 @@ Abra o link que o `git push` mostrar e crie o **Pull Request**. Preencha o model
 4. Ainda nesse branch, entre em `docs/05-design/prototipos/png/` e envie o PNG do mesmo jeito. Depois edite `docs/05-design/prototipos/README.md` (ícone de lápis) e adicione a linha da sua tela na tabela.
 5. Abra o Pull Request.
 
-Nos dois casos, a aba **Checks** do PR roda os mesmos verificadores. O PR só pode ser aprovado com tudo ✅.
+Nos dois casos, a aba **Checks** do PR roda os mesmos verificadores. O PR só pode ser aprovado com tudo ✅ e **1 aprovação** de um colega. Quem abriu o PR não faz merge do próprio trabalho sem essa revisão, e ninguém envia nada direto para a `main`.
 
 ### Também atualize
 
@@ -370,6 +430,7 @@ Nos dois casos, a aba **Checks** do PR roda os mesmos verificadores. O PR só po
 | Texto atrás do rodapé | Peça para reduzir o `gap` do `.screen`, encurtar textos ou colocar dois campos lado a lado. |
 | No Figma o celular ficou em outro lugar | O viewport do plugin não estava em 1920 × 1200. Apague e importe de novo. |
 | No Figma a fonte virou outra | Instale Space Grotesk e DM Sans no computador e importe de novo. |
+| `push` recusado para a `main` (*protected branch*) | Correto: a `main` é protegida. Crie um branch (`git checkout -b docs/EDTS-…`), faça o commit nele e abra PR. |
 | Check vermelho no PR | Abra *Details* no check, leia o erro (mesmo formato do Passo 3) e corrija no mesmo branch. |
 
 ---

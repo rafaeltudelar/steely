@@ -4,7 +4,12 @@ Obrigado por ajudar! Este guia vale para a equipe e para quem chegar de fora. El
 
 ## Regra de ouro
 
-**Ninguém envia direto para a `main`.** Toda mudança entra por um *Pull Request* (PR) revisado por pelo menos uma pessoa. A `main` fica protegida e as verificações precisam passar antes do merge.
+**Ninguém mexe na `main`.** Toda mudança entra por um *Pull Request* (PR) revisado por pelo menos uma pessoa. A `main` é protegida no GitHub: `push` direto é recusado e o merge só libera com **1 aprovação** e as verificações ✅.
+
+- **Cada pessoa no seu branch.** Um branch por tarefa do Jira, criado por quem vai fazer. Não faça commit no branch de outra pessoa; sugira a mudança num comentário do PR.
+- **Commits com a sua conta**, para o histórico mostrar quem fez o quê.
+- **Pronto para ser público.** O repositório é aberto: nunca suba senhas, chaves, `.env`, dados pessoais reais (CPF, telefone, e-mail, endereço) nem arquivos internos da faculdade. Antes de abrir o PR, confira `git diff --stat` para ver exatamente o que vai subir.
+- **Usando IA?** As mesmas regras valem para ela: o [`AGENTS.md`](AGENTS.md) já diz isso ao Claude, Gemini, ChatGPT, Codex, Cursor e Copilot. Revise tudo o que a IA fizer antes do commit.
 
 ## O fluxo (GitHub Flow)
 
@@ -58,7 +63,7 @@ Exemplos:
 
 Siga o [Guia de protótipos](docs/05-design/GUIA-DE-PROTOTIPOS.md). Em resumo:
 
-1. Gere o HTML da tela (com Claude ou Gemini) em `docs/05-design/prototipos/html/NNN-nome-da-tela.html`.
+1. Gere o HTML da tela (com Claude, Gemini, ChatGPT ou outra IA) em `docs/05-design/prototipos/html/NNN-nome-da-tela.html`.
 2. Rode `python3 ferramentas/prototipos/verificar_telas.py` e `python3 ferramentas/prototipos/conferir_telas.py NNN` até ficar tudo ✅.
 3. Importe no Figma com o html.to.design na posição da tabela do guia.
 4. Abra o PR com o HTML **e** o PNG gerado.
