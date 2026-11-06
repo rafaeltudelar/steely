@@ -1,0 +1,22 @@
+name: Problema
+description: Algo errado na documentação, numa tela ou no código
+labels: ["problema"]
+body:
+  - type: input
+    id: onde
+    attributes:
+      label: Onde
+      description: Arquivo, tela ou link
+      placeholder: docs/02-requisitos/regras-de-negocio.md
+    validations:
+      required: true
+  - type: textarea
+    id: oque
+    attributes:
+      label: O que está errado
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que deveria ser
