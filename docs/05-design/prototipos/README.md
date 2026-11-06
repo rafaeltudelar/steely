@@ -2,7 +2,9 @@
 
 [← Design](../README.md)
 
-Protótipo de alta fidelidade feito no Figma (versão de 13/09/2026). Cobre o fluxo de autenticação.
+Telas de alta fidelidade do app mobile, feitas no Figma ([arquivo STEELY](https://www.figma.com/design/MZxnX0uT8BGIxpxkMFwUCj/STEELY)).
+
+## Autenticação (versão de 13/09/2026)
 
 | Tela | Caso de uso | |
 |---|---|---|
@@ -13,4 +15,20 @@ Protótipo de alta fidelidade feito no Figma (versão de 13/09/2026). Cobre o fl
 | Recuperar senha | STY005 | <img src="04-recuperar-senha.png" width="220"> |
 | Entrar com código | STY006 | <img src="05-entrar-com-codigo.png" width="220"> |
 
-As demais telas (feed, anúncios, chat, propostas, agendamento, garantia e disputas — tarefas `PROTOTIPAGEM_001` a `044` no Jira) estavam em produção no Figma.
+## Sprint 13 — Home, notificações e criação de anúncio
+
+Geradas em HTML por [`ferramentas/prototipos/gerar_telas.py`](../../../ferramentas/prototipos/), aprovadas pelas verificações automáticas (paleta, tipografia e layout) e importadas no Figma com o plugin html.to.design. Cada pasta tem um arquivo por tela:
+
+- [`html/`](html/) — o arquivo que vai para o Figma (1920×1200, celular 375×812 na posição 773,194)
+- [`png/`](png/) — a captura do celular, gerada pelo `conferir_telas.py`
+
+| Nº | Tela | Jira | Casos de uso | |
+|---|---|---|---|---|
+| 001 | [Home / Feed](html/001-home-feed.html) | EDTS-252 | STY020, STY017 | <img src="png/001-home-feed.png" width="180"> |
+| 002 | [Central de Notificações](html/002-central-de-notificacoes.html) | EDTS-253 | STY021, STY025 | <img src="png/002-central-de-notificacoes.png" width="180"> |
+| 003 | [Criar Anúncio — Fotos](html/003-criar-anuncio-etapa-1-fotos.html) | EDTS-254 | STY016, STY017 | <img src="png/003-criar-anuncio-etapa-1-fotos.png" width="180"> |
+| 004 | [Criar Anúncio — Detalhes](html/004-criar-anuncio-etapa-2-detalhes.html) | EDTS-255 | STY016, STY055, STY052 | <img src="png/004-criar-anuncio-etapa-2-detalhes.png" width="180"> |
+| 005 | [Criar Anúncio — Preço e entrega](html/005-criar-anuncio-etapa-3-preco-e-entrega.html) | EDTS-256 | STY016 | <img src="png/005-criar-anuncio-etapa-3-preco-e-entrega.png" width="180"> |
+| 006 | [Criar Anúncio — Revisão](html/006-criar-anuncio-etapa-4-revisao.html) | EDTS-257 | STY016 | <img src="png/006-criar-anuncio-etapa-4-revisao.png" width="180"> |
+
+As demais telas (chat, propostas, agendamento, garantia e disputas — tarefas `PROTOTIPAGEM` no Jira) seguem o mesmo processo: veja o [Guia de protótipos](../GUIA-DE-PROTOTIPOS.md).

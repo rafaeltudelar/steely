@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Conferir tela</title>
+<!--
+  Página de apoio do conferir_telas.py (precisa de servidor http; não abra pelo Finder).
+  ?tela=docs/05-design/prototipos/html/001-home-feed.html   -> confere e escreve o JSON em #resultado
+  ?tela=...&modo=captura                                     -> mostra só o celular (375x812) para virar PNG
+-->
+<style>
+  html, body { margin: 0; background: #070F18; overflow: hidden; }
+  iframe { border: 0; width: 1920px; height: 1200px; position: absolute; left: 0; top: 0; }
+  body.captura iframe { left: -773px; top: -194px; }
+  pre { position: absolute; left: 0; top: 0; color: #fff; }
+</style>
+</head>
+<body>
+<pre id="resultado"></pre>
+<script>
+const params = new URLSearchParams(location.search);
+const tela = params.get('tela') || '';
+const captura = params.get('modo') === 'captura';
+if (captura) document.body.classList.add('captura');
+
+// Paleta da marca (RGB). Qualquer opacidade dessas cores é aceita.
+const PALETA = new Set(['13,27,42', '7,15,24', '17,35,58', '26,50,80', '29,219,106',
+  '168,239,196', '255,255,255', '107,122,141', '255,90,95']);
+const FONTES = ['Space Grotesk', 'DM Sans'];
+const TAMANHOS = [11, 13, 14, 15, 16, 18, 20, 24];
+
+function cores(valor) {
+  return [...valor.matchAll(/rgba?\(([^)]+)\)/g)].map(m => {
+    const p = m[1].split(',').map(s => s.trim());
+    return { rgb: p.slice(0, 3).map(n => Math.round(parseFloat(n))).join(','), alfa: p[3] === undefined ? 1 : parseFloat(p[3]) };
+  });
+}
+
+function nomeDe(el) {
+  const c = typeof el.className === 'string' ? el.className.trim() : '';
+  return c ? '.' + c.split(/\s+/).join('.') : el.tagName.toLowerCase();
+}
+
+function conferir(doc) {
+  const win = doc.defaultView;
+  const problemas = new Set();
+  const celular = doc.querySelector('.phone');
+  if (!celular) return { ok: false, problemas: ['Não achei o .phone'] };
+  const rc = celular.getBoundingClientRect();
+  const pos = [rc.left, rc.top, rc.width, rc.height].map(Math.round).join(',');
+  if (pos !== '773,194,375,812') problemas.add(`Celular fora do padrão (${pos}); esperado 773,194,375,812`);
+
+  const rodape = doc.querySelector('.footer, .nav');
+  const usadas = new Set();
+  const limite = rodape ? rodape.getBoundingClientRect().top - 4 : rc.bottom - 8;
+
+  for (const el of celular.querySelectorAll('*')) {
+    const tag = el.tagName.toLowerCase();
+    if (el.closest('svg') && tag !== 'svg') continue;
+    const cs = win.getComputedStyle(el);
+
+    // 1. Cores: texto, fundo, borda, gradiente, ícones
+    for (const prop of ['color', 'background-color', 'border-top-color', 'background-image', 'stroke', 'fill']) {
+      if (prop === 'border-top-color' && parseFloat(cs.borderTopWidth) === 0) continue;
+      if ((prop === 'stroke' || prop === 'fill') && tag !== 'svg') continue;
+      if (prop === 'color' && tag === 'svg') continue;
+      for (const c of cores(cs.getPropertyValue(prop)))
+        if (c.alfa > 0 && !PALETA.has(c.rgb)) problemas.add(`Cor fora da paleta rgb(${c.rgb}) em ${prop} de ${nomeDe(el)}`);
+    }
+
+    // 3a. Caixas visíveis (cartões, campos, botões) também não podem ficar atrás do rodapé
+    const caixa = parseFloat(cs.borderTopWidth) > 0 || cores(cs.backgroundColor).some(c => c.alfa > 0);
+    if (caixa && rodape && el !== rodape && !rodape.contains(el)) {
+      const r = el.getBoundingClientRect();
+      if (r.height > 0 && r.bottom > limite) problemas.add(`Caixa ${nomeDe(el)} fica atrás do rodapé (${Math.round(r.bottom)} > ${Math.round(limite)})`);
+    }
+
+    // 2. Tipografia e 3b. layout (só elementos com texto próprio)
+    const temTexto = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
+    if (!temTexto) continue;
+    const familia = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
+    if (!FONTES.includes(familia)) problemas.add(`Fonte "${familia}" em ${nomeDe(el)}`);
+    usadas.add(`${cs.fontWeight} 16px "${familia}"`);
+    const tam = parseFloat(cs.fontSize);
+    if (!TAMANHOS.includes(tam)) problemas.add(`Tamanho ${tam}px fora da escala (${TAMANHOS.join(', ')}) em ${nomeDe(el)}`);
+    const r = el.getBoundingClientRect();
+    const texto = el.textContent.trim().slice(0, 40);
+    if (rodape && !rodape.contains(el) && r.height > 0 && r.bottom > limite)
+      problemas.add(`"${texto}" fica atrás do rodapé (${Math.round(r.bottom)} > ${Math.round(limite)})`);
+    if (!el.closest('.chips, .carousel') && r.width > 0 && r.right > rc.right - 2)
+      problemas.add(`"${texto}" vaza pela direita do celular`);
+  }
+
+  // 4. Cada fonte/peso usado carregou de verdade (precisa de internet para o Google Fonts)
+  for (const f of usadas) if (!doc.fonts.check(f)) problemas.add(`Fonte não carregou: ${f} (sem internet?)`);
+  return { ok: problemas.size === 0, problemas: [...problemas] };
+}
+
+const frame = document.createElement('iframe');
+frame.src = '/' + tela.replace(/^\/+/, '');
+frame.onload = async () => {
+  const doc = frame.contentDocument;
+  await doc.fonts.ready;
+  if (!captura) document.getElementById('resultado').textContent = 'RESULTADO:' + JSON.stringify(conferir(doc));
+};
+document.body.appendChild(frame);
+</script>
+</body>
+</html>
