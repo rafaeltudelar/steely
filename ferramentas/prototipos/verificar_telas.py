@@ -32,9 +32,12 @@ TAMANHOS = {11, 13, 14, 15, 16, 18, 20, 24}
 NOME = re.compile(r'^(\d{3})-[a-z0-9]+(?:-[a-z0-9]+)*\.html$')
 
 
+CORES_COM_NOME = r'\b(?:white|black|red|green|blue|gray|grey|silver|lime|teal|navy|orange|yellow|purple)\b'
+
+
 def expandir(h):
     h = h.lower()
-    return ''.join(c * 2 for c in h) if len(h) == 3 else h[:6]
+    return ''.join(c * 2 for c in h[:3]) if len(h) in (3, 4) else h[:6]
 
 
 def verificar(arq: pathlib.Path):
@@ -42,7 +45,7 @@ def verificar(arq: pathlib.Path):
     txt = arq.read_text(encoding='utf-8')
     m = NOME.match(arq.name)
     if not m:
-        erros.append('Nome fora do padrão NNN-nome-em-minusculas.html (ex.: 007-detalhe-do-anuncio.html)')
+        erros.append('Nome fora do padrão NNN-nome-em-minusculas.html (ex.: 007-meus-anuncios.html)')
     t = re.search(r'<title>(.*?)</title>', txt, re.S)
     if not t:
         erros.append('Falta <title>')
@@ -62,21 +65,27 @@ def verificar(arq: pathlib.Path):
         if not re.search(trecho, txt):
             erros.append(f'Falta: {desc}')
 
-    for h in sorted(set(re.findall(r'#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b', sem_dados))):
+    for h in sorted(set(re.findall(r'#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b', sem_dados))):
         if expandir(h) not in PALETA:
             erros.append(f'Cor fora da paleta: #{h}')
     for rgb in sorted(set(re.findall(r'rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)', estilo))):
         if ','.join(rgb) not in PALETA_RGB and ','.join(rgb) != '0,0,0':
             erros.append(f'Cor fora da paleta: rgb({",".join(rgb)})')
 
+    if re.search(r'\bhsla?\(', estilo):
+        erros.append('Use hex ou rgba() da paleta, não hsl()')
+    for nome in sorted(set(re.findall(r'(?:color|background|fill|stroke|border)[\w-]*\s*[:=]\s*["\']?(' + CORES_COM_NOME[2:-2] + r')\b', txt, re.I))):
+        erros.append(f'Cor com nome não permitida: {nome} (use o hex da paleta)')
+    if re.search(r'url\(\s*["\']?https?:', estilo):
+        erros.append('Não use url(https://…) no CSS: nada de imagem externa')
     for fam in set(re.findall(r'font-family\s*:\s*([^;}"]+)', estilo)):
         for f in fam.split(','):
             nome = f.strip().strip('\'"').lower()
             if nome and nome not in FONTES:
                 erros.append(f'Fonte não permitida: {f.strip()}')
-    for tam in sorted(set(int(float(x)) for x in re.findall(r'font-size\s*:\s*([\d.]+)px', estilo))):
+    for tam in sorted(set(float(x) for x in re.findall(r'font-size\s*:\s*([\d.]+)px', estilo))):
         if tam not in TAMANHOS:
-            erros.append(f'Tamanho de fonte fora da escala: {tam}px')
+            erros.append(f'Tamanho de fonte fora da escala: {tam:g}px')
 
     for url in re.findall(r'(?:src|href)="(https?://[^"]+)"', txt):
         if not re.match(r'https://fonts\.(googleapis|gstatic)\.com', url):
@@ -87,6 +96,7 @@ def verificar(arq: pathlib.Path):
 
 
 def main():
+    sys.stdout.reconfigure(encoding='utf-8')
     arquivos = [pathlib.Path(a) for a in sys.argv[1:]] or sorted(TELAS.glob('*.html'))
     if not arquivos:
         sys.exit(f'Nenhuma tela em {TELAS.relative_to(RAIZ)}')

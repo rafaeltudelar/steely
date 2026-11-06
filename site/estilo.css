@@ -1,4 +1,5 @@
-/* Steely — site do projeto. Só cores e fontes do Design System (docs/05-design/README.md). */
+/* Steely — site do projeto. Cores e fontes do Design System (docs/05-design/README.md);
+   o cinza de texto é um tom mais claro do #6B7A8D para passar no contraste AA sobre o fundo escuro. */
 :root {
   --charcoal: #0D1B2A;
   --fundo: #070F18;
@@ -7,7 +8,7 @@
   --verde: #1DDB6A;
   --esg: #A8EFC4;
   --branco: #FFFFFF;
-  --cinza: #6B7A8D;
+  --cinza: #8D9AAB;
   --titulo: 'Space Grotesk', system-ui, sans-serif;
   --texto: 'DM Sans', system-ui, sans-serif;
   --raio: 12px;

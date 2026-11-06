@@ -1,6 +1,6 @@
 ## O que muda
 
-<!-- Uma ou duas frases. Ex.: Adiciona a tela 007 Detalhe do anúncio. -->
+<!-- Uma ou duas frases. Ex.: Adiciona a tela 007 Meus Anúncios. -->
 
 **Tarefa no Jira:** EDTS-
 

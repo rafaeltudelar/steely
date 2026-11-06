@@ -14,15 +14,15 @@ git checkout main
 git pull
 
 # 2. Crie um branch para a tarefa do Jira
-git checkout -b docs/EDTS-258-tela-detalhe-do-anuncio
+git checkout -b docs/EDTS-258-tela-007-meus-anuncios
 
 # 3. Trabalhe, rode as verificações e faça commits pequenos
 python3 ferramentas/verificar_links.py
 git add .
-git commit -m "docs(design): adiciona tela 007 detalhe do anúncio (EDTS-258)"
+git commit -m "docs(design): adiciona tela 007 meus anúncios (EDTS-258)"
 
 # 4. Envie e abra o PR
-git push -u origin docs/EDTS-258-tela-detalhe-do-anuncio
+git push -u origin docs/EDTS-258-tela-007-meus-anuncios
 ```
 
 Depois abra o PR no GitHub (o modelo de descrição aparece sozinho), peça revisão e aguarde o ✅ das verificações.
@@ -48,7 +48,7 @@ tipo(área): o que mudou, no imperativo (EDTS-123)
 
 Exemplos:
 
-- `docs(design): adiciona tela 007 detalhe do anúncio (EDTS-258)`
+- `docs(design): adiciona tela 007 meus anúncios (EDTS-258)`
 - `feat(backend): cria rota de publicação de oferta (EDTS-301)`
 - `fix(mobile): corrige preço sem centavos no card (EDTS-322)`
 

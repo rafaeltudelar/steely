@@ -80,7 +80,7 @@ function conferir(doc) {
     if (!temTexto) continue;
     const familia = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
     if (!FONTES.includes(familia)) problemas.add(`Fonte "${familia}" em ${nomeDe(el)}`);
-    usadas.add(`${cs.fontWeight} 16px "${familia}"`);
+    usadas.add(familia);
     const tam = parseFloat(cs.fontSize);
     if (!TAMANHOS.includes(tam)) problemas.add(`Tamanho ${tam}px fora da escala (${TAMANHOS.join(', ')}) em ${nomeDe(el)}`);
     const r = el.getBoundingClientRect();
@@ -91,8 +91,10 @@ function conferir(doc) {
       problemas.add(`"${texto}" vaza pela direita do celular`);
   }
 
-  // 4. Cada fonte/peso usado carregou de verdade (precisa de internet para o Google Fonts)
-  for (const f of usadas) if (!doc.fonts.check(f)) problemas.add(`Fonte não carregou: ${f} (sem internet?)`);
+  // 4. Cada família usada carregou de verdade (precisa de internet para o Google Fonts).
+  //    getComputedStyle mostra o nome declarado mesmo sem a fonte; por isso olhamos o FontFaceSet.
+  const carregadas = new Set([...doc.fonts].filter(f => f.status === 'loaded').map(f => f.family.replace(/["']/g, '')));
+  for (const f of usadas) if (!carregadas.has(f)) problemas.add(`Fonte não carregou: ${f} (sem internet?)`);
   return { ok: problemas.size === 0, problemas: [...problemas] };
 }
 

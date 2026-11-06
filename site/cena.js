@@ -1,6 +1,6 @@
 // Cena 3D do topo: uma placa de vídeo low-poly sendo varrida pelo feixe do Scanner IA.
 // Three.js r160 (versão fixa no importmap). Respeita prefers-reduced-motion e pausa fora da tela.
-import * as THREE from 'three';
+let THREE;
 
 const COR = {
   charcoal: 0x0D1B2A, superficie: 0x11233A, borda: 0x1A3250,
@@ -16,17 +16,18 @@ function suportaWebGL() {
   try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; }
 }
 
-if (!suportaWebGL()) {
-  // Sem WebGL: mostra as etiquetas sobre o fundo, sem 3D.
+function semTresD() {
+  // Sem WebGL ou sem acesso ao CDN: mostra só as etiquetas sobre o fundo.
   palco.classList.add('sem-3d');
   etiquetas.forEach((el, i) => {
-    el.style.left = `${22 + (i % 2) * 52}%`;
+    el.style.left = `${28 + (i % 2) * 44}%`;
     el.style.top = `${30 + Math.floor(i / 2) * 36}%`;
     el.classList.add('visivel');
   });
-} else {
-  iniciar();
 }
+
+if (!suportaWebGL()) semTresD();
+else import('three').then((m) => { THREE = m; iniciar(); }).catch(semTresD);
 
 function iniciar() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });

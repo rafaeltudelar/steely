@@ -69,13 +69,27 @@ def servidor():
 
 def chrome(binario, perfil, *args):
     base = [binario, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run',
-            '--no-default-browser-check', f'--user-data-dir={perfil}', '--virtual-time-budget=6000']
+            '--no-default-browser-check', f'--user-data-dir={perfil}']
     if sys.platform.startswith('linux'):
         base.append('--no-sandbox')
-    return subprocess.run(base + list(args), capture_output=True, text=True, timeout=120)
+    try:
+        return subprocess.run(base + list(args), capture_output=True, encoding='utf-8', errors='replace', timeout=120).stdout
+    except subprocess.TimeoutExpired:
+        return ''
+
+
+def conferir(binario, perfil, url):
+    """Roda a conferência; tenta de novo com mais tempo se as fontes demorarem a chegar."""
+    for orcamento in (6000, 15000):
+        saida = chrome(binario, perfil, '--window-size=1920,1200', f'--virtual-time-budget={orcamento}', '--dump-dom', url)
+        achado = re.search(r'RESULTADO:(\{.*?\})\s*</pre>', saida, re.S)
+        if achado:
+            return json.loads(html.unescape(achado.group(1)))
+    return {'ok': False, 'problemas': ['A conferência não terminou (HTML incompleto ou sem internet?)']}
 
 
 def main():
+    sys.stdout.reconfigure(encoding='utf-8')
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     sem_png = '--sem-png' in sys.argv
     telas = sorted(TELAS.glob('[0-9][0-9][0-9]-*.html'))
@@ -93,12 +107,7 @@ def main():
         for tela in telas:
             rel = tela.relative_to(RAIZ).as_posix()
             url = f'http://127.0.0.1:{porta}/ferramentas/prototipos/conferir.html?tela={urllib.parse.quote(rel)}'
-            saida = chrome(binario, perfil, '--window-size=1920,1200', '--dump-dom', url).stdout
-            achado = re.search(r'RESULTADO:(\{.*?\})\s*</pre>', saida, re.S)
-            if not achado:
-                resultado = {'ok': False, 'problemas': ['A conferência não terminou (tela não carregou?)']}
-            else:
-                resultado = json.loads(html.unescape(achado.group(1)))
+            resultado = conferir(binario, perfil, url)
             if resultado['ok']:
                 print(f'✅ {tela.name}')
             else:
@@ -108,7 +117,7 @@ def main():
                     print(f'   - {p}')
             if not sem_png:
                 png = PNGS / tela.with_suffix('.png').name
-                chrome(binario, perfil, '--window-size=375,812', '--force-device-scale-factor=2',
+                chrome(binario, perfil, '--window-size=375,812', '--force-device-scale-factor=2', '--virtual-time-budget=6000',
                        f'--screenshot={png}', url + '&modo=captura')
                 print(f'   📸 {png.relative_to(RAIZ).as_posix()}' if png.exists() else '   ⚠️ captura falhou')
     srv.shutdown()

@@ -44,7 +44,7 @@ function abrir(destino) {
   if (!tela || tela === atual) return;
   atual = tela;
   lista.querySelectorAll('button').forEach((b) => b.setAttribute('aria-current', String(b.dataset.n === n)));
-  const trocar = () => { frame.src = BASE + tela.arq; };
+  const trocar = () => { if (atual === tela) frame.src = BASE + tela.arq; };
   if (reduzido) trocar();
   else { frame.classList.add('saindo'); setTimeout(trocar, 160); }
   if (publicou) setTimeout(() => avisar('Anúncio publicado! +20 moedas'), 350);
@@ -53,7 +53,7 @@ function abrir(destino) {
 frame.addEventListener('load', () => {
   frame.classList.remove('saindo');
   const doc = frame.contentDocument;
-  if (!doc || !atual) return;
+  if (!doc || !atual || !frame.src.endsWith(atual.arq)) return; // ignora carregamento antigo
   const estilo = doc.createElement('style');
   estilo.textContent = '[data-link]{cursor:pointer;transition:filter .15s}[data-link]:hover{filter:brightness(1.15)}';
   doc.head.appendChild(estilo);

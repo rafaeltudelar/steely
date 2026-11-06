@@ -14,7 +14,7 @@ body:
     id: numero
     attributes:
       label: Número e nome da tela
-      placeholder: 007 Detalhe do anúncio
+      placeholder: 007 Meus Anúncios
     validations:
       required: true
   - type: input
@@ -33,4 +33,4 @@ body:
     id: fluxo
     attributes:
       label: De onde vem e para onde vai
-      placeholder: Vem da Home ao tocar num card; o botão "Fazer proposta" abre a tela 008
+      placeholder: Vem do menu Perfil; o botão "Editar" abre a tela 008

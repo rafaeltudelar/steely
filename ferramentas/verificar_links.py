@@ -15,7 +15,7 @@ import sys
 import urllib.parse
 
 RAIZ = pathlib.Path(__file__).resolve().parents[1]
-IGNORAR = {'.git', 'node_modules'}
+IGNORAR = {'.git', 'node_modules', '_site', '.venv', 'venv'}
 MD_LINK = re.compile(r'!?\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)')
 HTML_ATTR = re.compile(r'\b(?:src|href)\s*=\s*["\']([^"\']+)["\']')
 EXTERNO = re.compile(r'^(?:[a-z][a-z0-9+.-]*:|//|#)', re.I)
@@ -28,10 +28,12 @@ def arquivos():
 
 
 def main():
+    sys.stdout.reconfigure(encoding='utf-8')
     quebrados, total = [], 0
     for arq in sorted(arquivos()):
         texto = arq.read_text(encoding='utf-8', errors='replace')
         texto = re.sub(r'```.*?```', '', texto, flags=re.S)  # exemplos em blocos de código não contam
+        texto = re.sub(r'`[^`\n]+`', '', texto)                # nem os de código em linha
         for alvo in MD_LINK.findall(texto) + HTML_ATTR.findall(texto):
             if EXTERNO.match(alvo) or '{' in alvo:
                 continue
