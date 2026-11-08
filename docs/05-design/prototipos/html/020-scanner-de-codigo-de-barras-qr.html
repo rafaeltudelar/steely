@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>020 · Scanner de Código de Barras/QR</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1200px;background:#070F18;font-family:'DM Sans',sans-serif;color:#FFFFFF;position:relative;overflow:hidden;-webkit-font-smoothing:antialiased}
+.phone{position:absolute;left:773px;top:194px;width:375px;height:812px;background:#0D1B2A;border:2px solid #1A3250;border-radius:44px;overflow:hidden}
+.notch{position:absolute;top:0;left:122px;width:126px;height:30px;background:#070F18;border-radius:0 0 16px 16px;z-index:5}
+.screen{position:absolute;left:0;top:0;width:371px;padding:42px 24px 0 24px;display:flex;flex-direction:column;gap:18px}
+.row{display:flex;align-items:center}
+.col{display:flex;flex-direction:column}
+.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+.h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;line-height:30px;color:#FFFFFF}
+.h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;line-height:24px;color:#FFFFFF}
+.h3{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;line-height:22px;color:#FFFFFF}
+.price{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#1DDB6A}
+.big-price{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;line-height:30px;color:#FFFFFF}
+.body{font-size:14px;line-height:20px;font-weight:400;color:#FFFFFF}
+.small{font-size:13px;line-height:18px;font-weight:400;color:#6B7A8D}
+.label{font-size:15px;line-height:20px;font-weight:600}
+.label-s{font-size:13px;line-height:16px;font-weight:600;color:#FFFFFF}
+.caption{font-size:11px;line-height:14px;font-weight:500;color:#6B7A8D}
+.muted{color:#6B7A8D}.green{color:#1DDB6A}.white{color:#FFFFFF}.esg{color:#A8EFC4}.red{color:#FF5A5F}
+.iconbtn{width:32px;height:32px;border:1px solid #1A3250;border-radius:8px;display:flex;align-items:center;justify-content:center;flex:none}
+.topbar{display:flex;align-items:center;gap:12px;height:32px}
+.topbar .title{flex:1;text-align:center}
+.spacer32{width:32px;flex:none}
+.steps{display:flex;gap:6px}
+.steps div{flex:1;height:4px;border-radius:999px;background:#1A3250}
+.steps div.on{background:#1DDB6A}
+.steplabels{display:flex;justify-content:space-between;margin-top:8px}
+.steplabels span{font-size:11px;line-height:14px;font-weight:500;color:#6B7A8D}
+.steplabels span.on{color:#1DDB6A}
+.steplabels span.done{color:#FFFFFF}
+.field{display:flex;flex-direction:column;gap:8px}
+.flabel{font-size:13px;line-height:17px;color:#6B7A8D;font-weight:400}
+.flabel b{color:#FF5A5F;font-weight:400}
+.input{min-height:49px;border:1px solid #1A3250;border-radius:12px;background:rgba(255,255,255,0.03);display:flex;align-items:center;gap:10px;padding:0 16px;font-size:14px;line-height:18px;color:#FFFFFF}
+.input.ph{color:rgba(107,122,141,0.5)}
+.input.focus{border-color:#1DDB6A}
+.textarea{align-items:flex-start;padding:14px 16px;min-height:96px}
+.hint{font-size:11px;line-height:14px;font-weight:500;color:#6B7A8D;display:flex;gap:6px;align-items:flex-start}
+.info{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:rgba(29,219,106,0.05);border:1px solid rgba(29,219,106,0.14)}
+.info .small{flex:1}
+.esgbox{background:rgba(168,239,196,0.08);border:1px solid rgba(168,239,196,0.2)}
+.card{border:1px solid #1A3250;border-radius:12px;background:#11233A}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid #1A3250;border-radius:12px;background:rgba(255,255,255,0.03)}
+.opt.sel{border-color:#1DDB6A;background:rgba(29,219,106,0.07)}
+.radio{width:18px;height:18px;border-radius:999px;border:2px solid #1A3250;flex:none;margin-top:1px;display:flex;align-items:center;justify-content:center}
+.opt.sel .radio{border-color:#1DDB6A}
+.opt.sel .radio i{width:8px;height:8px;border-radius:999px;background:#1DDB6A;display:block}
+.chip{height:32px;padding:0 14px;border-radius:999px;border:1px solid #1A3250;background:rgba(255,255,255,0.03);display:flex;align-items:center;gap:6px;font-size:13px;line-height:16px;font-weight:600;color:#6B7A8D;flex:none}
+.chip.on{background:#1DDB6A;border-color:#1DDB6A;color:#0D1B2A}
+.chip .count{min-width:18px;height:18px;border-radius:999px;background:#0D1B2A;color:#1DDB6A;font-size:11px;line-height:14px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 5px}
+.tagchip{height:28px;padding:0 10px;border-radius:999px;background:rgba(29,219,106,0.12);display:flex;align-items:center;gap:6px;font-size:11px;line-height:14px;font-weight:500;color:#1DDB6A}
+.toggle{width:44px;height:26px;border-radius:999px;background:#1DDB6A;position:relative;flex:none}
+.toggle i{position:absolute;right:3px;top:3px;width:20px;height:20px;border-radius:999px;background:#0D1B2A;display:block}
+.footer{position:absolute;left:0;bottom:0;width:371px;padding:14px 24px 26px 24px;background:#0D1B2A;border-top:1px solid #1A3250;display:flex;gap:12px;z-index:4}
+.btn{height:48px;border-radius:12px;font-size:15px;line-height:20px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:#1DDB6A;color:#0D1B2A;flex:1}
+.btn.secondary{background:rgba(255,255,255,0.03);border:1px solid #1A3250;color:#FFFFFF;padding:0 18px}
+.btn.small{height:34px;border-radius:8px;font-size:13px;line-height:16px;padding:0 12px}
+.tile{border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative;flex:none}
+.photo{background:linear-gradient(160deg,#1A3250 0%,#11233A 100%);border:1px solid #1A3250}
+.addtile{border:1.5px dashed #1DDB6A;background:rgba(29,219,106,0.05);flex-direction:column;gap:6px}
+.emptytile{border:1.5px dashed #1A3250}
+.badge-cover{position:absolute;left:8px;bottom:8px;height:22px;padding:0 8px;border-radius:999px;background:rgba(13,27,42,0.85);display:flex;align-items:center;gap:4px;font-size:11px;line-height:14px;font-weight:500;color:#1DDB6A}
+.rm{position:absolute;right:6px;top:6px;width:22px;height:22px;border-radius:999px;background:rgba(13,27,42,0.85);display:flex;align-items:center;justify-content:center}
+.ord{position:absolute;left:6px;top:6px;width:20px;height:20px;border-radius:999px;background:rgba(13,27,42,0.85);font-size:11px;line-height:14px;font-weight:600;color:#FFFFFF;display:flex;align-items:center;justify-content:center}
+.notif{display:flex;gap:12px;padding:12px 14px;border-radius:12px;border:1px solid #1A3250;background:rgba(255,255,255,0.03);position:relative}
+.notif.unread{background:rgba(29,219,106,0.05);border-color:rgba(29,219,106,0.14)}
+.nicon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.ng{background:rgba(29,219,106,0.12)}.ne{background:rgba(168,239,196,0.12)}.nr{background:rgba(255,90,95,0.12)}.nm{background:rgba(107,122,141,0.16)}
+.dot{width:8px;height:8px;border-radius:999px;background:#1DDB6A;flex:none}
+.group{font-size:11px;line-height:14px;font-weight:600;color:#6B7A8D;letter-spacing:0.6px;text-transform:uppercase}
+.divider{height:1px;background:#1A3250}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0}
+.logo{height:34px;width:auto;display:block;margin-left:-6px}
+.avatar{width:40px;height:40px;border-radius:999px;background:#1A3250;border:1.5px solid rgba(29,219,106,0.6);display:flex;align-items:center;justify-content:center;flex:none}
+.bell{width:40px;height:40px;border-radius:12px;border:1px solid #1A3250;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;position:relative;flex:none}
+.bell i{position:absolute;right:9px;top:8px;width:9px;height:9px;border-radius:999px;background:#FF5A5F;border:2px solid #0D1B2A;display:block}
+.search{height:48px;border:1px solid #1A3250;border-radius:12px;background:rgba(255,255,255,0.03);display:flex;align-items:center;gap:8px;padding:0 6px 0 14px}
+.search .ph{flex:1;font-size:14px;line-height:18px;color:rgba(107,122,141,0.7)}
+.filter{width:36px;height:36px;border-radius:8px;background:rgba(29,219,106,0.12);display:flex;align-items:center;justify-content:center}
+.chips{display:flex;gap:8px;overflow:hidden;margin-right:-24px}
+.banner{display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:18px;background:rgba(29,219,106,0.07);border:1px solid rgba(29,219,106,0.22)}
+.carousel{display:flex;gap:12px;overflow:hidden;margin-right:-24px}
+.ocard{width:156px;flex:none;border:1px solid #1A3250;border-radius:12px;background:#11233A;overflow:hidden}
+.ocard .media{height:104px;background:#1A3250;position:relative;display:flex;align-items:center;justify-content:center}
+.imp{position:absolute;left:8px;top:8px;height:22px;padding:0 8px;border-radius:999px;background:rgba(13,27,42,0.85);display:flex;align-items:center;gap:4px;font-size:11px;line-height:14px;font-weight:500;color:#1DDB6A}
+.fav{position:absolute;right:8px;top:8px;width:28px;height:28px;border-radius:999px;background:rgba(13,27,42,0.85);display:flex;align-items:center;justify-content:center}
+.ocard .info2{padding:10px 10px 12px;display:flex;flex-direction:column;gap:4px}
+.nav{position:absolute;left:0;bottom:0;width:371px;height:84px;padding:10px 20px 0;background:rgba(13,27,42,0.96);border-top:1px solid #1A3250;display:flex;justify-content:space-between;align-items:flex-start;z-index:4}
+.navitem{width:56px;display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:6px;font-size:11px;line-height:14px;font-weight:500;color:#6B7A8D}
+.navitem.on{color:#1DDB6A}
+.navitem.add{padding-top:0;gap:2px}
+.fab{width:48px;height:48px;border-radius:999px;background:#1DDB6A;display:flex;align-items:center;justify-content:center}
+</style></head><body><div class="phone"><div class="notch"></div><div class="screen" style="gap:12px">
+<div class="topbar"><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></div><div class="title h2">Scanner Steely</div><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1DDB6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div></div>
+<div class="chips">
+  <div class="chip on"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0D1B2A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>Etiqueta / Serial IA</div>
+  <div class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7A8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="16" y="3" width="5" height="5" rx="1"/><rect x="3" y="16" width="5" height="5" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3M21 21v.01M12 7v3a2 2 0 0 1-2 2H7M3 12h.01M12 3h.01M12 16v.01M16 12h1M21 12v.01M12 21v-1"/></svg>QR Code de entrega</div>
+</div>
+<div class="card" style="height:232px;position:relative;overflow:hidden;background:#070F18;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+  <div style="position:absolute;top:12px;left:12px" class="tagchip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1DDB6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>Visão Computacional IA ativa</div>
+  <div style="width:188px;height:122px;border:2px dashed #1DDB6A;border-radius:16px;position:relative;display:flex;align-items:center;justify-content:center;background:rgba(29,219,106,0.04)">
+    <div style="position:absolute;left:12px;right:12px;top:58px;height:2px;background:#1DDB6A"></div>
+    <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1DDB6A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="16" y="3" width="5" height="5" rx="1"/><rect x="3" y="16" width="5" height="5" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3M21 21v.01M12 7v3a2 2 0 0 1-2 2H7M3 12h.01M12 3h.01M12 16v.01M16 12h1M21 12v.01M12 21v-1"/></svg>
+  </div>
+  <span class="caption" style="color:#FFFFFF">Aponte para o código de barras, S/N ou QR Code</span>
+</div>
+<div class="info" style="padding:12px 14px;border-color:rgba(29,219,106,0.28);background:rgba(29,219,106,0.08)">
+  <div class="nicon ng" style="width:38px;height:38px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DDB6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
+  <div class="col grow" style="gap:3px">
+    <div class="row between"><span class="label-s">Hardware identificado</span><span class="caption green">96% confiança</span></div>
+    <span class="body" style="font-size:13px;line-height:17px">GeForce RTX 3060 Ti 8GB Gigabyte OC</span>
+    <span class="caption">S/N: SN230849182 · P/N: GV-N306TGAMING</span>
+  </div>
+</div>
+<div class="field" style="gap:6px">
+  <span class="flabel">Não conseguiu ler? Digite o serial ou código</span>
+  <div class="row" style="gap:8px">
+    <div class="input grow" style="min-height:44px;height:44px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7A8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5"/></svg><span>GV-N306TGAMING-OC</span></div>
+    <div class="btn secondary" style="height:44px;padding:0 14px;font-size:13px">Validar</div>
+  </div>
+</div>
+<div class="hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A8EFC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4M16.71 13.88l.7.71-2.82 2.82"/></svg><span>Identificar a etiqueta original pelo Scanner IA garante <span class="esg">+20 moedas ESG</span> no anúncio.</span></div>
+</div>
+<div class="footer"><div class="btn secondary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>Galeria</div><div class="btn primary">Preencher anúncio</div></div></div></body></html>
