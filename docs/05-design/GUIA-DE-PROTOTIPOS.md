@@ -476,18 +476,18 @@ Nos dois casos, a aba **Checks** do PR roda os mesmos verificadores. O PR só po
 | 028 | Checkout / Pagamento | EDTS-279 | 98973 | `028-checkout-pagamento.html` | a fazer |
 | 029 | Confirmação de Pedido | EDTS-280 | 101343 | `029-confirmacao-de-pedido.html` | a fazer |
 | 030 | Meus Pedidos | EDTS-281 | 103713 | `030-meus-pedidos.html` | a fazer |
-| 031 | Detalhes do Pedido | EDTS-282 | 106083 | `031-detalhes-do-pedido.html` | a fazer |
-| 032 | Solicitar Garantia | EDTS-283 | 108453 | `032-solicitar-garantia.html` | a fazer |
-| 033 | Acompanhar Garantia | EDTS-284 | 110823 | `033-acompanhar-garantia.html` | a fazer |
-| 034 | Abrir Disputa | EDTS-285 | 113193 | `034-abrir-disputa.html` | a fazer |
-| 035 | Detalhes da Disputa | EDTS-286 | 115563 | `035-detalhes-da-disputa.html` | a fazer |
-| 036 | Cancelar Pedido | EDTS-287 | 117933 | `036-cancelar-pedido.html` | a fazer |
-| 037 | Avaliar Transação | EDTS-288 | 120303 | `037-avaliar-transacao.html` | a fazer |
-| 038 | Carteira Digital | EDTS-289 | 122673 | `038-carteira-digital.html` | a fazer |
-| 039 | Depositar na Carteira | EDTS-290 | 125043 | `039-depositar-na-carteira.html` | a fazer |
-| 040 | Sacar da Carteira | EDTS-291 | 127413 | `040-sacar-da-carteira.html` | a fazer |
-| 041 | Verificação Captcha | EDTS-292 | 129783 | `041-verificacao-captcha.html` | a fazer |
-| 042 | Criar Leilão | EDTS-293 | 132153 | `042-criar-leilao.html` | a fazer |
+| 031 | Detalhes do Pedido | EDTS-282 | 106083 | [`031-detalhes-do-pedido.html`](prototipos/html/031-detalhes-do-pedido.html) | ✅ pronta |
+| 032 | Solicitar Garantia | EDTS-283 | 108453 | [`032-solicitar-garantia.html`](prototipos/html/032-solicitar-garantia.html) | ✅ pronta |
+| 033 | Acompanhar Garantia | EDTS-284 | 110823 | [`033-acompanhar-garantia.html`](prototipos/html/033-acompanhar-garantia.html) | ✅ pronta |
+| 034 | Abrir Disputa | EDTS-285 | 113193 | [`034-abrir-disputa.html`](prototipos/html/034-abrir-disputa.html) | ✅ pronta |
+| 035 | Detalhes da Disputa | EDTS-286 | 115563 | [`035-detalhes-da-disputa.html`](prototipos/html/035-detalhes-da-disputa.html) | ✅ pronta |
+| 036 | Cancelar Pedido | EDTS-287 | 117933 | [`036-cancelar-pedido.html`](prototipos/html/036-cancelar-pedido.html) | ✅ pronta |
+| 037 | Avaliar Transação | EDTS-288 | 120303 | [`037-avaliar-transacao.html`](prototipos/html/037-avaliar-transacao.html) | ✅ pronta |
+| 038 | Carteira Digital | EDTS-289 | 122673 | [`038-carteira-digital.html`](prototipos/html/038-carteira-digital.html) | ✅ pronta |
+| 039 | Depositar na Carteira | EDTS-290 | 125043 | [`039-depositar-na-carteira.html`](prototipos/html/039-depositar-na-carteira.html) | ✅ pronta |
+| 040 | Sacar da Carteira | EDTS-291 | 127413 | [`040-sacar-da-carteira.html`](prototipos/html/040-sacar-da-carteira.html) | ✅ pronta |
+| 041 | Verificação Captcha | EDTS-292 | 129783 | [`041-verificacao-captcha.html`](prototipos/html/041-verificacao-captcha.html) | ✅ pronta |
+| 042 | Criar Leilão | EDTS-293 | 132153 | [`042-criar-leilao.html`](prototipos/html/042-criar-leilao.html) | ✅ pronta |
 | 043 | Participar de Leilão | EDTS-294 | 134523 | `043-participar-de-leilao.html` | a fazer |
 | 044 | Impulsionar Anúncio (Boost) | EDTS-295 | 136893 | `044-impulsionar-anuncio-boost.html` | a fazer |
 | 045 | Sobre o Steely | EDTS-296 | 139263 | `045-sobre-o-steely.html` | a fazer |

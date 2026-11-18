@@ -42,6 +42,23 @@ Geradas em HTML por [`ferramentas/prototipos/gerar_telas.py`](../../../ferrament
 | 053 | [Editar Perfil](html/053-editar-perfil.html) | EDTS-304 | STY011 | <img src="png/053-editar-perfil.png" width="180"> |
 | 054 | [Configurações de Segurança](html/054-configuracoes-de-seguranca.html) | EDTS-305 | STY007, STY008, STY009 | <img src="png/054-configuracoes-de-seguranca.png" width="180"> |
 
+## Sprint 13 — Pedidos, garantia, disputas, carteira e leilão
+
+| Nº | Tela | Jira | Casos de uso | |
+|---|---|---|---|---|
+| 031 | [Detalhes do Pedido](html/031-detalhes-do-pedido.html) | EDTS-282 | STY028, STY031, STY032 | <img src="png/031-detalhes-do-pedido.png" width="180"> |
+| 032 | [Solicitar Garantia](html/032-solicitar-garantia.html) | EDTS-283 | STY031, STY033 | <img src="png/032-solicitar-garantia.png" width="180"> |
+| 033 | [Acompanhar Garantia](html/033-acompanhar-garantia.html) | EDTS-284 | STY031, STY033 | <img src="png/033-acompanhar-garantia.png" width="180"> |
+| 034 | [Abrir Disputa](html/034-abrir-disputa.html) | EDTS-285 | STY033, STY034 | <img src="png/034-abrir-disputa.png" width="180"> |
+| 035 | [Detalhes da Disputa](html/035-detalhes-da-disputa.html) | EDTS-286 | STY033, STY034, STY035 | <img src="png/035-detalhes-da-disputa.png" width="180"> |
+| 036 | [Cancelar Pedido](html/036-cancelar-pedido.html) | EDTS-287 | STY026 | <img src="png/036-cancelar-pedido.png" width="180"> |
+| 037 | [Avaliar Transação](html/037-avaliar-transacao.html) | EDTS-288 | STY012 | <img src="png/037-avaliar-transacao.png" width="180"> |
+| 038 | [Carteira Digital](html/038-carteira-digital.html) | EDTS-289 | STY042, STY043, STY044 | <img src="png/038-carteira-digital.png" width="180"> |
+| 039 | [Depositar na Carteira](html/039-depositar-na-carteira.html) | EDTS-290 | STY045 | <img src="png/039-depositar-na-carteira.png" width="180"> |
+| 040 | [Sacar da Carteira](html/040-sacar-da-carteira.html) | EDTS-291 | STY028, STY045 | <img src="png/040-sacar-da-carteira.png" width="180"> |
+| 041 | [Verificação Captcha](html/041-verificacao-captcha.html) | EDTS-292 | STY046, STY004 | <img src="png/041-verificacao-captcha.png" width="180"> |
+| 042 | [Criar Leilão](html/042-criar-leilao.html) | EDTS-293 | STY036 | <img src="png/042-criar-leilao.png" width="180"> |
+
 ## Histórico — versões anteriores
 
 Primeiras versões das telas de autenticação, anexadas nas tarefas de prototipagem do Jira. Ficam aqui para mostrar a evolução do design; a versão atual é a da seção [Autenticação](#autenticação-versão-de-13092026).
